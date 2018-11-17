@@ -29,9 +29,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -55,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+//    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -145,9 +157,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+//        if (mAuthTask != null) {
+//            return;
+//        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -186,9 +198,67 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            userLogin(email, password);
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
         }
+    }
+
+    private void userLogin(final String email, final String password) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_LOGIN,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        showProgress(false);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            if(!obj.getBoolean("error")){
+                                SharedPrefManager.getInstance(getApplicationContext())
+                                        .userLogin(
+                                                obj.getInt("parent_id"),
+                                                obj.getString("name"),
+                                                obj.getString("email")
+                                        );
+                                startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+                                finish();
+                            }else{
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        obj.getString("message"),
+                                        Toast.LENGTH_LONG
+                                ).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        showProgress(false);
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     private boolean isEmailValid(String email) {
@@ -295,60 +365,59 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            //return true;
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-                Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-                LoginActivity.this.startActivity(intent);
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
+//    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+//
+//        private final String mEmail;
+//        private final String mPassword;
+//
+//        UserLoginTask(String email, String password) {
+//            mEmail = email;
+//            mPassword = password;
+//        }
+//
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//            // TODO: attempt authentication against a network service.
+//            try {
+//                // Simulate network access.
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                return false;
+//            }
+//
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+//
+//            // TODO: register the new account here.
+//            //return true;
+//            return false;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(final Boolean success) {
+//            mAuthTask = null;
+//            showProgress(false);
+//
+//            if (success) {
+//                finish();
+//                Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+//                LoginActivity.this.startActivity(intent);
+//            } else {
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            mAuthTask = null;
+//            showProgress(false);
+//        }
+//    }
 }
 

@@ -10,14 +10,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 			isset($_POST['password']) and
 				isset($_POST['name']))
 		{
-			$db = new DbOperations();
+
 			
-			if($db->createParent($_POST['email'], $_POST['password'], $_POST['name'])){
+			$db = new DbOperations();
+
+			$result = $db->createUser($_POST['email'], $_POST['password'], $_POST['name']);
+			
+			if($result == 1){
 				$response['error'] = false;
 				$response['message'] = "User registered successfully";
-			}else{
+			}elseif($result == 2){
 				$response['error'] = true;
 				$response['message'] = "Some error occurred please try again";
+			}elseif($result == 0){
+				$response['error'] = true;
+				$response['message'] = "Username and email already registered!";
 			}		
 	    }else{
 		    $response['error'] = true;

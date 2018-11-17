@@ -11,9 +11,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         if($db->userLogin($_POST['email'], $_POST['password'])){
             $user = $db->getUserByEmail($_POST['email']);
             $response['error'] = false; 
-            $response['id'] = $user['id'];
+            $response['parent_id'] = $user['parent_id'];
             $response['email'] = $user['email'];
-            $response['username'] = $user['name'];
+            $response['name'] = $user['name'];
         }else{
             $response['error'] = true; 
             $response['message'] = "Invalid email or password";          
@@ -27,6 +27,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $response['error'] = true;
         $response['message'] = "Invalid Request";
     }
- 
+    
 echo json_encode($response);
 ?>

@@ -47,9 +47,9 @@ public class ParentFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        for (int i = 1; i <= 10; i++) {
-            studentList.add(new Student(String.valueOf(i), String.valueOf(i)));
-        }
+//        for (int i = 1; i <= 10; i++) {
+//            studentList.add(new Student(String.valueOf(i), String.valueOf(i)));
+//        }
     }
 
     @Override

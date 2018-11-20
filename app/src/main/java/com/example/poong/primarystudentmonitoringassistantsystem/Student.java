@@ -22,6 +22,8 @@ public class Student {
     
     //Parent
 
+    public Student(){}
+
     public Student(String name, String id){
         this.name = name;
         this.id = id;

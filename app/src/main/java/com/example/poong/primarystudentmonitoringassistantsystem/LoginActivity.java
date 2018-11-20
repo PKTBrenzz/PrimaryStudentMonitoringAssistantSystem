@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if(!obj.getBoolean("error")){
                                 SharedPrefManager.getInstance(getApplicationContext())
                                         .userLogin(
-                                                obj.getInt("parent_id"),
+                                                obj.getString("user_id"),
                                                 obj.getString("name"),
                                                 obj.getString("email")
                                         );

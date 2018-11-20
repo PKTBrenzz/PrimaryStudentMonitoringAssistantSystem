@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class Main2Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -15,6 +17,7 @@ public class Main2Activity extends AppCompatActivity implements BottomNavigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main2);
 
         loadFragment(new HomeFragment());
@@ -46,7 +49,7 @@ public class Main2Activity extends AppCompatActivity implements BottomNavigation
                 fragment = new StudentFragment();
                 break;
             case R.id.navigation_dashboard:
-                fragment = new DashBoardFragment();
+                fragment = new ChatListFragment();
                 break;
             case R.id.navigation_notifications:
                 fragment = new NotificationFragment();

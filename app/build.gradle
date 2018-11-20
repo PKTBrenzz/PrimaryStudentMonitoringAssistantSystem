@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 26
@@ -36,4 +37,7 @@ dependencies {
     implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
+    implementation 'com.google.firebase:firebase-core:16.0.5'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-database:16.0.4'
 }

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/chat_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:src="@tools:sample/avatars"
@@ -26,8 +26,8 @@
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/chat_image"
+        app:layout_constraintTop_toTopOf="@+id/chat_image"
         tools:text="@tools:sample/full_names"
         android:layout_marginLeft="8dp" />
 

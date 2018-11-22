@@ -43,6 +43,7 @@ public class MyStudentRecyclerViewAdapter extends RecyclerView.Adapter<MyStudent
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), StudentDetail.class);
                 intent.putExtra("NAME", mValues.get(position).getName());
+                intent.putExtra("STUDENT_ID", mValues.get(position).getId());
                 v.getContext().startActivity(intent);
             }
         });

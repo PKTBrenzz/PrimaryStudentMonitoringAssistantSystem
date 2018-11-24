@@ -36,6 +36,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -222,6 +224,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                 obj.getString("name"),
                                                 obj.getString("email")
                                         );
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                ref.child("user").child(obj.getString("user_id")).setValue(obj.getString("name"));
                                 startActivity(new Intent(getApplicationContext(), Main2Activity.class));
                                 finish();
                             }else{

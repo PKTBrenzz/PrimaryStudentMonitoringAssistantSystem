@@ -1,17 +1,21 @@
 package com.example.poong.primarystudentmonitoringassistantsystem;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ChatRoomAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
+    private Context ctx;
     private List<ChatMessage> messageList;
 
     public ChatRoomAdapter(List<ChatMessage> mL){
@@ -20,7 +24,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
+        View view = null;
+
 
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
@@ -32,6 +37,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
             return new ReceivedMessageViewHolder(view);
         }
 
+        ctx = view.getContext();
         return null;
     }
 
@@ -40,7 +46,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         ChatMessage message = (ChatMessage) messageList.get(position);
 
-        if (message.sender == "1") {
+        if (message.sender.equals(SharedPrefManager.getInstance(ctx).getUserID())) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -78,9 +84,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
+        @SuppressLint("SimpleDateFormat")
         public void bind(ChatMessage message) {
             messageText.setText(message.content);
-
+            timeText.setText(new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(message.date));
         }
     }
 
@@ -93,9 +100,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
         }
 
+        @SuppressLint("SimpleDateFormat")
         public void bind(ChatMessage message) {
             messageText.setText(message.content);
-
+            timeText.setText(new SimpleDateFormat("yy/MM/dd HH:mm:ss").format(message.date));
         }
     }
 }

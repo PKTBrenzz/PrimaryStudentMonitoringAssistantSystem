@@ -32,7 +32,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ChatMessageList.class);
-                //intent.putExtra("NAME", chatRoomList.get(position).getRoomId());
+                intent.putExtra("NAME", chatRoomList.get(position).getRoomId());
                 v.getContext().startActivity(intent);
             }
         });

@@ -4,7 +4,6 @@ import java.util.List;
 
 public class ChatRoom {
     private String roomId;
-    public List<User> senders;
     public List<ChatMessage> messages;
 
     public ChatRoom(){

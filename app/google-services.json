@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "306771965403",
+    "firebase_url": "https://primaryschoolsystem-55973.firebaseio.com",
+    "project_id": "primaryschoolsystem-55973",
+    "storage_bucket": "primaryschoolsystem-55973.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306771965403:android:e51ca36d112f014f",
+        "android_client_info": {
+          "package_name": "com.example.poong.primarystudentmonitoringassistantsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306771965403-v395uh952es1ts0cq19g9gi577ah4grc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.poong.primarystudentmonitoringassistantsystem",
+            "certificate_hash": "aa2c3a99aea76a03cd4e3de76c38109e2a90ffb1"
+          }
+        },
+        {
+          "client_id": "306771965403-bcr59sj9onjm6c7555rrumd9lgqhulm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcHeiHMzIiNliXIjqnI9pJZ_ZW9E6iNuM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306771965403-bcr59sj9onjm6c7555rrumd9lgqhulm9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

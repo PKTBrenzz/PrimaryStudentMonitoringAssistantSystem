@@ -19,17 +19,15 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
-
-        </activity>
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"></activity>
         <activity
             android:name=".Attendance"
             android:label="@string/title_activity_attendance"
@@ -39,8 +37,7 @@
             android:label="@string/title_activity_student_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ParentDetail" />
-        <activity
-            android:name=".ChatMessageList" />
+        <activity android:name=".ChatMessageList" />
     </application>
 
 </manifest>

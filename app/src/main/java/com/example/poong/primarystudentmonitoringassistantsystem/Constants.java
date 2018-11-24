@@ -6,4 +6,5 @@ public class Constants {
 
     public static final String URL_LOGIN = ROOT_URL + "userLogin.php";
     public static final String URL_STUDENT_LIST = ROOT_URL + "displayStudents.php";
+    public static final String URL_STUDENT_DETAIL = ROOT_URL + "getStudentResult.php";
 }

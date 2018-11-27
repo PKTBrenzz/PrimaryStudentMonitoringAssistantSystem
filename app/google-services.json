@@ -23,14 +23,6 @@
           }
         },
         {
-          "client_id": "306771965403-hipui5f5p7bdg96emi2lidv0blpbf5iu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.poong.primarystudentmonitoringassistantsystem",
-            "certificate_hash": "a678eef2248caf305bab39b54689420233fd4202"
-          }
-        },
-        {
           "client_id": "306771965403-bcr59sj9onjm6c7555rrumd9lgqhulm9.apps.googleusercontent.com",
           "client_type": 3
         }

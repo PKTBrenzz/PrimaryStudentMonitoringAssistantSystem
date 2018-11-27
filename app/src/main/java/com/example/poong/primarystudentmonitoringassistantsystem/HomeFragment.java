@@ -1,6 +1,7 @@
 package com.example.poong.primarystudentmonitoringassistantsystem;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceActivity;
+import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -17,7 +20,9 @@ public class HomeFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private HomeViewModel mViewModel;
-    private Button testButton;
+    private Button testButton, mShowTeacherButton;
+
+    private String identity = SharedPrefManager.getInstance(getActivity()).getUserIdentity();
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -29,13 +34,30 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        testButton = view.findViewById(R.id.test);
+        testButton = view.findViewById(R.id.attendance);
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDatabase.child("hello").setValue("1");
+                Intent intent = new Intent(getActivity(), AttendanceActivity.class);
+                startActivity(intent);
             }
         });
+
+        mShowTeacherButton = view.findViewById(R.id.show_teacher);
+        if(identity.equals("P")){
+            mShowTeacherButton.setVisibility(View.VISIBLE);
+            mShowTeacherButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), TeacherList.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        else if(identity.equals("T")){
+            mShowTeacherButton.setVisibility(View.GONE);
+        }
+
 
         return view;
 

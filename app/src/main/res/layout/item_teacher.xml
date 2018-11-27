@@ -23,7 +23,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/attendanceStudentName"
+        android:id="@+id/teacherName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -35,18 +35,5 @@
         app:layout_constraintTop_toTopOf="@+id/chat_image"
         tools:text="@tools:sample/full_names"
         android:layout_marginLeft="8dp" />
-
-    <CheckBox
-        android:id="@+id/attendanceCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Attended"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

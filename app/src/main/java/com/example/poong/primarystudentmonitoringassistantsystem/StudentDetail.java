@@ -185,6 +185,11 @@ public class StudentDetail extends AppCompatActivity {
                             set.setDrawValues(!set.isDrawValuesEnabled());
                         }
                         radarChart.invalidate();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                intent.getStringExtra("STUDENT_ID"),
+                                Toast.LENGTH_LONG
+                        ).show();
                     }
                 },
                 new Response.ErrorListener() {

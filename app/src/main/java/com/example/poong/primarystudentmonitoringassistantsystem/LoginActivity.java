@@ -81,6 +81,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            finish();
+            startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+            return;
+        }
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -220,6 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if(!obj.getBoolean("error")){
                                 SharedPrefManager.getInstance(getApplicationContext())
                                         .userLogin(
+                                                obj.getString("identity"),
                                                 obj.getString("user_id"),
                                                 obj.getString("name"),
                                                 obj.getString("email")

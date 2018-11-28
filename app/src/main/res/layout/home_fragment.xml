@@ -43,14 +43,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="CALENDER" />
+                        android:text="Show Student" />
 
                     <Button
                         android:id="@+id/button2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="HOMEWORK" />
+                        android:text="NEWS" />
 
                 </TableRow>
 
@@ -62,18 +62,22 @@
                         android:id="@+id/attendance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:layout_weight="1"
+                        android:text="Attedance" />
 
                     <Button
                         android:id="@+id/show_teacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Show Teacher" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent" >
+
+                </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"

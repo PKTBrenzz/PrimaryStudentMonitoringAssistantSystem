@@ -1,7 +1,6 @@
 package com.example.poong.primarystudentmonitoringassistantsystem;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,6 +26,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoomAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
+import com.example.poong.primarystudentmonitoringassistantsystem.Students.MyStudentRecyclerViewAdapter;
+import com.example.poong.primarystudentmonitoringassistantsystem.Students.Student;
+import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceConfigurationError;
 
 
 public class StudentFragment extends Fragment implements SearchView.OnQueryTextListener{
@@ -56,7 +56,7 @@ public class StudentFragment extends Fragment implements SearchView.OnQueryTextL
     Spinner spinner;
     Toolbar toolbar;
 
-    public com.example.poong.primarystudentmonitoringassistantsystem.MyStudentRecyclerViewAdapter arrayAdapter;
+    public MyStudentRecyclerViewAdapter arrayAdapter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -86,7 +86,7 @@ public class StudentFragment extends Fragment implements SearchView.OnQueryTextL
 
         classRoomAdapter = new ClassRoomAdapter(getActivity().getApplicationContext(), mClassList);
 
-        arrayAdapter = new MyStudentRecyclerViewAdapter(studentList);
+//        arrayAdapter = new MyStudentRecyclerViewAdapter(studentList, StudentList.this);
 //        //TODO: Create test models from MySQL for students class
 //        List<Student> test = new ArrayList<>();
 //

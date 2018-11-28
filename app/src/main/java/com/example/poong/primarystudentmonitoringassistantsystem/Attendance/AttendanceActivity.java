@@ -1,22 +1,19 @@
 package com.example.poong.primarystudentmonitoringassistantsystem.Attendance;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,14 +25,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoomAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
 import com.example.poong.primarystudentmonitoringassistantsystem.Constants;
-import com.example.poong.primarystudentmonitoringassistantsystem.Main2Activity;
-import com.example.poong.primarystudentmonitoringassistantsystem.MyStudentRecyclerViewAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
-import com.example.poong.primarystudentmonitoringassistantsystem.Student;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,21 +40,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttendanceActivity extends AppCompatActivity {
-
-    StringBuffer sb = null;
+public class AttendanceActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private Button mSumbitButton,mEditButton;
-    private CheckBox mCheckBox;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
 
-    private ArrayList<Classroom> mClassList;
+    private ArrayList<Classroom> mClassList = new ArrayList<Classroom>();
     private ClassRoomAdapter classRoomAdapter;
 
+    private ArrayList<Attendance> attendancesList = new ArrayList<Attendance>();
+    private List<Attendance> getDataSetMatches() {
+        return attendancesList;
+    }
+
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter attendanceAdapter;
+    private AttendanceRecyclerViewAdapter attendanceAdapter;
     private RecyclerView.LayoutManager attendanceLayoutManager;
-    private MyStudentRecyclerViewAdapter myStudentRecyclerViewAdapter;
 
     private Date date;
     private String submission = "";
@@ -75,24 +69,13 @@ public class AttendanceActivity extends AppCompatActivity {
 
         date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = simpleDateFormat.format(date);
+        final String currentDate = simpleDateFormat.format(date);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading");
 
-        Spinner spinnerClasses = findViewById(R.id.spinner_classes);
-
-
-//        submission = "submitted";
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        Toast.makeText(
-//                getApplicationContext(),
-//                currentDate,
-//                Toast.LENGTH_LONG
-//        ).show();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.attendanceRecycleView);
         recyclerView.setNestedScrollingEnabled(false);
@@ -102,58 +85,28 @@ public class AttendanceActivity extends AppCompatActivity {
         attendanceAdapter = new AttendanceRecyclerViewAdapter(getDataSetMatches(), AttendanceActivity.this);
         recyclerView.setAdapter(attendanceAdapter);
 
-        getStudentAttendance(currentDate);
+        classRoomAdapter = new ClassRoomAdapter(this, mClassList);
 
-//        Toast.makeText(AttendanceActivity.this, submission, Toast.LENGTH_SHORT).show();
+        getClassList();
 
-//        Toast.makeText(
-//                getApplicationContext(),
-//                submission,
-//                Toast.LENGTH_LONG
-//        ).show();
+        Spinner spinnerClasses = findViewById(R.id.spinner_classes);
+        spinnerClasses.setAdapter(classRoomAdapter);
 
-//        mSumbitButton = findViewById(R.id.attendanceSubmitButton);
-//        mEditButton = findViewById(R.id.attendanceEditButton);
-//
-//        if(submission.equals("not submitted")){
-//            mSumbitButton.setVisibility(View.VISIBLE);
-//            mEditButton.setVisibility(View.GONE);
-//            mSumbitButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-////                    editStudentAttendance();
-//                }
-//            });
-//        }
-//        else{
-//            edit_done = true;
-//
-//            mSumbitButton.setVisibility(View.GONE);
-//            mEditButton.setVisibility(View.VISIBLE);
-//            mEditButton.setText("Edit");
-//            mEditButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(edit_done == true){
-//                        mEditButton.setText("Done");
-//                        edit_done = false;
-//                    }else{
-//                        mEditButton.setText("Edit");
-//                        edit_done = true;
-//                    }
-//                }
-//            });
-//        }
+        spinnerClasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Classroom clickedClass = (Classroom) adapterView.getItemAtPosition(i);
+                getStudentAttendance("2018-11-24",clickedClass.getClassID());
+                String clickedClassName = clickedClass.getClassName();
+                Toast.makeText(getApplicationContext(), clickedClassName, Toast.LENGTH_SHORT).show();
+            }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
+
     private void setAttendanceButton(String submission) {
         mSumbitButton = findViewById(R.id.attendanceSubmitButton);
         mEditButton = findViewById(R.id.attendanceEditButton);
@@ -167,44 +120,20 @@ public class AttendanceActivity extends AppCompatActivity {
             mSumbitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    JSONObject JSONestimate = new JSONObject();
-//                    final JSONArray myarray = new JSONArray();
-//                    attendanceAdapter.notifyDataSetChanged();
-//                    for (int i = 0; i < attendancesList.size(); i++) {
-//
-//                        try {
-//                            JSONestimate.put("data:" + String.valueOf(i + 1), attendancesList.get(i).getJSONObject());
-//                            myarray.put(attendancesList.get(i).getJSONObject());
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    Log.d("TTT",myarray.toString());
-//                    Toast.makeText(AttendanceActivity.this, myarray.toString(),Toast.LENGTH_LONG).show();
-
-
-//                    sb = new StringBuffer();
-//                    attendanceAdapter.notifyDataSetChanged();
-//                    int i = 0;
-//                    do{
-//                        Attendance hey = attendancesList.get(i);
-//                        sb.append(hey.getAttendance_status());
-//                        if(i != attendancesList.size() - 1){
-//                            sb.append("\n");
-//                        }
-//                        i++;
-//                    }while(i<attendancesList.size());
-//
-//                    Toast.makeText(AttendanceActivity.this,sb.toString(),Toast.LENGTH_SHORT).show();
                     editStudentAttendance();
 
                     mSumbitButton.setVisibility(View.GONE);
                     mEditButton.setVisibility(View.VISIBLE);
 
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    attendanceAdapter.notifyDataSetChanged();
+                    for (int i = 0; i < attendancesList.size(); i++) {
+                        attendancesList.get(i).setEnabled(false);
+                    }
+                    attendanceAdapter.notifyDataSetChanged();
+
+//                    Intent intent = getIntent();
+//                    finish();
+//                    startActivity(intent);
                 }
             });
         }
@@ -232,17 +161,23 @@ public class AttendanceActivity extends AppCompatActivity {
                             attendancesList.get(i).setEnabled(true);
                         }
                         attendanceAdapter.notifyDataSetChanged();
-//                        mCheckBox.setEnabled(true);
+
                     }else{
                         mEditButton.setText("Edit");
 
                         editStudentAttendance();
 
+                        attendanceAdapter.notifyDataSetChanged();
+                        for (int i = 0; i < attendancesList.size(); i++) {
+                            attendancesList.get(i).setEnabled(false);
+                        }
+                        attendanceAdapter.notifyDataSetChanged();
+
                         edit_done = true;
 
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
+//                        Intent intent = getIntent();
+//                        finish();
+//                        startActivity(intent);
                     }
                 }
             });
@@ -250,8 +185,6 @@ public class AttendanceActivity extends AppCompatActivity {
     }
 
     private void getClassList() {
-        mClassList = new ArrayList<Classroom>();
-
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_CLASSROOM_LIST,
@@ -305,7 +238,9 @@ public class AttendanceActivity extends AppCompatActivity {
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    private void getStudentAttendance(final String currentDate) {
+    private void getStudentAttendance(final String currentDate, final int classID) {
+        attendancesList.clear();
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_ATTENDANCE_LIST,
@@ -320,7 +255,7 @@ public class AttendanceActivity extends AppCompatActivity {
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
-                                    Attendance attendance = new Attendance(obj.getInt("attendance_id"), obj.getString("attendance_status"), obj.getString("date"), obj.getString("student_id"), obj.getString("submission_status"));
+                                    Attendance attendance = new Attendance(obj.getInt("attendance_id"), obj.getString("attendance_status"), obj.getString("date"), obj.getString("student_id"), obj.getString("submission_status"), obj.getString("name"));
                                     attendancesList.add(attendance);
                                     attendanceAdapter.notifyDataSetChanged();
 
@@ -371,7 +306,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("action", "show");
                 params.put("date", currentDate);
-                params.put("user_id", SharedPrefManager.getInstance(getApplicationContext()).getUserID());
+                params.put("classID",String.valueOf(classID));
                 return params;
             }
         };
@@ -454,8 +389,46 @@ public class AttendanceActivity extends AppCompatActivity {
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    private ArrayList<Attendance> attendancesList = new ArrayList<Attendance>();
-    private List<Attendance> getDataSetMatches() {
-        return attendancesList;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        getMenuInflater().inflate(R.menu.searchtool_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+
+        if (s == null || s.trim().isEmpty()) {
+            attendanceAdapter = new AttendanceRecyclerViewAdapter(getDataSetMatches(), AttendanceActivity.this);
+            recyclerView.setAdapter(attendanceAdapter);
+            return true;
+        }
+
+        s = s.toLowerCase();
+        ArrayList<Attendance> searchedList = new ArrayList<>();
+        for(Attendance attendance : attendancesList)
+        {
+            String name = attendance.getStudentName().toLowerCase();
+            if(name.contains(s)){
+                searchedList.add(attendance);
+            }
+
+        }
+        attendanceAdapter.setFilter(searchedList);
+        return true;
+
+
     }
 }

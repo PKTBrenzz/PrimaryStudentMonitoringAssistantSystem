@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.poong.primarystudentmonitoringassistantsystem.Students.MyStudentRecyclerViewAdapter;
+import com.example.poong.primarystudentmonitoringassistantsystem.Students.Student;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +68,7 @@ public class ParentFragment extends Fragment {
 //            } else {
 //                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
 //            }
-        recyclerView.setAdapter(new MyStudentRecyclerViewAdapter(studentList));
+//        recyclerView.setAdapter(new MyStudentRecyclerViewAdapter(studentList));
         // Set the adapter
 //        if (view instanceof RecyclerView) {
 //

@@ -1,4 +1,4 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.Students;
 
 import java.util.Date;
 
@@ -19,8 +19,6 @@ public class Student {
     private String id;
     private Date birthdate;
     private String classroom;
-    
-    //Parent
 
     public Student(){}
 

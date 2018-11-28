@@ -5,20 +5,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
-import com.example.poong.primarystudentmonitoringassistantsystem.Student;
-import com.example.poong.primarystudentmonitoringassistantsystem.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AttendanceRecyclerViewAdapter extends RecyclerView.Adapter<AttendanceRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Attendance> items;
+    private List<Attendance> items;
     private Context context;
 //    ArrayList<Attendance> edited = new ArrayList<>();
 
@@ -39,7 +36,7 @@ public class AttendanceRecyclerViewAdapter extends RecyclerView.Adapter<Attendan
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = items.get(position);
-        holder.mAttendanceStudentName.setText(items.get(position).getStudent_id());
+        holder.mAttendanceStudentName.setText(items.get(position).getStudentName());
         if(items.get(position).getAttendance_status().equals("present")){
             holder.mCheckBox.setChecked(true);
             holder.mCheckBox.setEnabled(items.get(position).isEnabled());
@@ -65,6 +62,12 @@ public class AttendanceRecyclerViewAdapter extends RecyclerView.Adapter<Attendan
     @Override
     public int getItemCount() {
         return this.items.size();
+    }
+
+    public void setFilter(ArrayList<Attendance> searchedList){
+        items = new ArrayList<>();
+        items.addAll(searchedList);
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

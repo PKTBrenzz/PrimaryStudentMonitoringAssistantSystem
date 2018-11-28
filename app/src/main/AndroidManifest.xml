@@ -38,7 +38,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ParentDetail" />
         <activity android:name=".ChatMessageList" />
-        <activity android:name=".Teacher.TeacherList"></activity>
+        <activity android:name=".Teacher.TeacherList" />
+        <activity android:name=".Students.StudentList"></activity>
     </application>
 
 </manifest>

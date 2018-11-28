@@ -1,6 +1,7 @@
 package com.example.poong.primarystudentmonitoringassistantsystem;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -38,7 +40,7 @@ import java.util.Map;
 import java.util.ServiceConfigurationError;
 
 
-public class StudentFragment extends Fragment {
+public class StudentFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -76,13 +78,11 @@ public class StudentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setHasOptionsMenu(true);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
-        mClassList = new ArrayList<Classroom>();
 
         classRoomAdapter = new ClassRoomAdapter(getActivity().getApplicationContext(), mClassList);
 
@@ -105,7 +105,8 @@ public class StudentFragment extends Fragment {
 //            studentList.add(new Student(String.valueOf(i), String.valueOf(i)));
 //            arrayAdapter.notifyDataSetChanged();
 //        }
-        loadClassList();
+//        loadClassList();
+        loadStudentList(1);
     }
 
     private void loadClassList() {
@@ -246,25 +247,24 @@ public class StudentFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        setHasOptionsMenu(true);
 
 
         spinner = view.findViewById(R.id.spinner_classes);
-        spinner.setAdapter(classRoomAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Classroom clickedClass = (Classroom) adapterView.getItemAtPosition(i);
-                loadStudentList(clickedClass.getClassID());
-                String clickedClassName = clickedClass.getClassName();
-                Toast.makeText(getActivity().getApplicationContext(), clickedClassName, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+//        spinner.setAdapter(classRoomAdapter);
+//
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Classroom clickedClass = (Classroom) adapterView.getItemAtPosition(i);
+//                loadStudentList(clickedClass.getClassID());
+//                String clickedClassName = clickedClass.getClassName();
+//                Toast.makeText(getActivity().getApplicationContext(), clickedClassName, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//            }
+//        });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.student_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -289,19 +289,46 @@ public class StudentFragment extends Fragment {
         MenuItem searchItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(this);
+
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                arrayAdapter.getFilter().filter(s);
+//                return false;
+//            }
+//        });
+
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+
+        s = s.toLowerCase();
+        ArrayList<Student> newList = new ArrayList<>();
+        for(Student newstudent : studentList)
+        {
+            String name = newstudent.getName().toLowerCase();
+            if(name.contains(s)){
+                newList.add(newstudent);
             }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                arrayAdapter.getFilter().filter(s);
-                return false;
-            }
-        });
+        }
+        arrayAdapter.setFilter(newList);
 
+        return false;
     }
 
     /**

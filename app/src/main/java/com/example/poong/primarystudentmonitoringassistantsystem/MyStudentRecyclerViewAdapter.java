@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class MyStudentRecyclerViewAdapter extends RecyclerView.Adapter<MyStudentRecyclerViewAdapter.ViewHolder> implements Filterable{
 
-    private final List<Student> mValues;
+    private List<Student> mValues = new ArrayList<>();
     private final List<Student> mValuesFull ;
 
 
@@ -109,5 +109,12 @@ public class MyStudentRecyclerViewAdapter extends RecyclerView.Adapter<MyStudent
         public String toString() {
             return super.toString() + "'";
         }
+    }
+
+
+    public void setFilter(ArrayList<Student> newList){
+        mValues = new ArrayList<>();
+        mValues.addAll(newList);
+        notifyDataSetChanged();
     }
 }

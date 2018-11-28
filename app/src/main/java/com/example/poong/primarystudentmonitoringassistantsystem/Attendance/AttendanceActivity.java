@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,6 +25,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoomAdapter;
+import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
 import com.example.poong.primarystudentmonitoringassistantsystem.Constants;
 import com.example.poong.primarystudentmonitoringassistantsystem.Main2Activity;
 import com.example.poong.primarystudentmonitoringassistantsystem.MyStudentRecyclerViewAdapter;
@@ -53,15 +56,16 @@ public class AttendanceActivity extends AppCompatActivity {
     private CheckBox mCheckBox;
     private ProgressDialog progressDialog;
 
+    private ArrayList<Classroom> mClassList;
+    private ClassRoomAdapter classRoomAdapter;
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter attendanceAdapter;
     private RecyclerView.LayoutManager attendanceLayoutManager;
     private MyStudentRecyclerViewAdapter myStudentRecyclerViewAdapter;
 
     private Date date;
-
-    public String submission = "";
-
+    private String submission = "";
     private boolean edit_done;
 
     @Override
@@ -75,6 +79,9 @@ public class AttendanceActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading");
+
+        Spinner spinnerClasses = findViewById(R.id.spinner_classes);
+
 
 //        submission = "submitted";
 
@@ -147,81 +154,6 @@ public class AttendanceActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
-    private void getStudentAttendance(final String currentDate) {
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.POST,
-                Constants.URL_ATTENDANCE_LIST,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            if(!jsonObject.getBoolean("error")) {
-                                JSONArray jsonArray = jsonObject.getJSONArray("attendance");
-
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject obj = jsonArray.getJSONObject(i);
-                                    Attendance attendance = new Attendance(obj.getInt("attendance_id"), obj.getString("attendance_status"), obj.getString("date"), obj.getString("student_id"), obj.getString("submission_status"));
-                                    attendancesList.add(attendance);
-                                    attendanceAdapter.notifyDataSetChanged();
-
-                                    if(obj.getString("submission_status").equals("not submitted")){
-                                        submission = "not submitted";
-                                    }
-                                    else if(obj.getString("submission_status").equals("submitted")){
-                                        submission = "submitted";
-                                    }
-                                    else{
-                                        submission = "edited";
-                                    }
-
-                                }
-                                Log.d("HEY",submission);
-                                setAttendanceButton(submission);
-//                                Toast.makeText(
-//                                        getApplicationContext(),
-//                                        currentDate,
-//                                        Toast.LENGTH_LONG
-//                                ).show();
-                            }else{
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        jsonObject.getString("message"),
-                                        Toast.LENGTH_LONG
-                                ).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(
-                                getApplicationContext(),
-                                error.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("action", "show");
-                params.put("date", currentDate);
-                params.put("user_id", SharedPrefManager.getInstance(getApplicationContext()).getUserID());
-                return params;
-            }
-        };
-
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
-    }
-
     private void setAttendanceButton(String submission) {
         mSumbitButton = findViewById(R.id.attendanceSubmitButton);
         mEditButton = findViewById(R.id.attendanceEditButton);
@@ -315,6 +247,136 @@ public class AttendanceActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void getClassList() {
+        mClassList = new ArrayList<Classroom>();
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_CLASSROOM_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if(!jsonObject.getBoolean("error")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("classroom");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject obj = jsonArray.getJSONObject(i);
+                                    Classroom classroom = new Classroom(obj.getInt("classID"), obj.getString("className"));
+                                    mClassList.add(classroom);
+                                    classRoomAdapter.notifyDataSetChanged();
+                                }
+                            }else{
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        jsonObject.getString("message"),
+                                        Toast.LENGTH_LONG
+                                ).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", SharedPrefManager.getInstance(getApplicationContext()).getUserID());
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void getStudentAttendance(final String currentDate) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_ATTENDANCE_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if(!jsonObject.getBoolean("error")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("attendance");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject obj = jsonArray.getJSONObject(i);
+                                    Attendance attendance = new Attendance(obj.getInt("attendance_id"), obj.getString("attendance_status"), obj.getString("date"), obj.getString("student_id"), obj.getString("submission_status"));
+                                    attendancesList.add(attendance);
+                                    attendanceAdapter.notifyDataSetChanged();
+
+                                    if(obj.getString("submission_status").equals("not submitted")){
+                                        submission = "not submitted";
+                                    }
+                                    else if(obj.getString("submission_status").equals("submitted")){
+                                        submission = "submitted";
+                                    }
+                                    else{
+                                        submission = "edited";
+                                    }
+
+                                }
+                                Log.d("HEY",submission);
+                                setAttendanceButton(submission);
+//                                Toast.makeText(
+//                                        getApplicationContext(),
+//                                        currentDate,
+//                                        Toast.LENGTH_LONG
+//                                ).show();
+                            }else{
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        jsonObject.getString("message"),
+                                        Toast.LENGTH_LONG
+                                ).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("action", "show");
+                params.put("date", currentDate);
+                params.put("user_id", SharedPrefManager.getInstance(getApplicationContext()).getUserID());
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     private void editStudentAttendance() {

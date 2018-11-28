@@ -8,7 +8,6 @@ import java.sql.Date;
 public class Attendance {
     private int attendance_id;
     private String attendance_status;
-//    private Date date;
     private String date;
     private String student_id;
     private String submission_status;

@@ -29,18 +29,34 @@ public class Attendance {
     public JSONObject getJSONObject() {
         JSONObject obj = new JSONObject();
         try {
-            obj.put("attendance_id", attendance_id);
-            obj.put("attendance_status", attendance_status);
-            obj.put("date",date);
-            obj.put("student_id", student_id);
-            obj.put("submission_status", submission_status);
-            obj.put("name", studentName);
+            obj.put("attendanceID", attendance_id);
+            obj.put("attendanceStatus", attendance_status);
+            obj.put("attendanceDate",date);
+            obj.put("studentID", student_id);
+            obj.put("attendanceSubmission", submission_status);
+            obj.put("studentName", studentName);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
         return obj;
     }
+
+//    public JSONObject getJSONObject() {
+//        JSONObject obj = new JSONObject();
+//        try {
+//            obj.put("attendance_id", attendance_id);
+//            obj.put("attendance_status", attendance_status);
+//            obj.put("date",date);
+//            obj.put("student_id", student_id);
+//            obj.put("submission_status", submission_status);
+//            obj.put("name", studentName);
+//        }
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return obj;
+//    }
 
     public int getAttendance_id() {
         return attendance_id;

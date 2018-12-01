@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,8 @@ import java.util.Map;
 
 public class StudentDetail extends AppCompatActivity {
 
+    private Button mPredictButton;
+
     public static final float MAX = 12, MIN = 1f;
     public static final int NB_QUALITIES = 5;
 
@@ -60,6 +63,21 @@ public class StudentDetail extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.name);
         textView.setText(intent.getStringExtra("NAME"));
+
+        mPredictButton = findViewById(R.id.predictButton);
+
+        mPredictButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("studentID", intent.getStringExtra("STUDENT_ID"));
+                bundle.putString("gender", intent.getStringExtra("gender"));
+
+                PredictionDialog predictionDialog = new PredictionDialog();
+                predictionDialog.setArguments(bundle);
+                predictionDialog.show(getSupportFragmentManager(), "my_dialog");
+            }
+        });
 
         radarChart = (RadarChart) findViewById(R.id.grade_chart);
         radarChart.setBackgroundColor(Color.rgb(60, 65, 82));
@@ -140,11 +158,11 @@ public class StudentDetail extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
 
-                                    String grade_id = obj.getString("grades_id").trim();
+                                    String grade_id = obj.getString("gradesID").trim();
                                     String subject = obj.getString("subject").trim();
                                     Integer mark = obj.getInt("mark");
 
-                                    String student_id = obj.getString("student_id").trim();
+                                    String student_id = obj.getString("studentID").trim();
 
 //                                    Grade grade = new Grade(grade_id, student_id, subject, mark);
 //                                    gradesList.add(grade);

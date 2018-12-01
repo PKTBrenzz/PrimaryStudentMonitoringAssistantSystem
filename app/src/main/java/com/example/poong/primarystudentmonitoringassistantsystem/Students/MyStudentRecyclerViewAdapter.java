@@ -57,6 +57,7 @@ public class MyStudentRecyclerViewAdapter extends RecyclerView.Adapter<MyStudent
                 Intent intent = new Intent(v.getContext(), StudentDetail.class);
                 intent.putExtra("NAME", mValues.get(position).getName());
                 intent.putExtra("STUDENT_ID", mValues.get(position).getId());
+                intent.putExtra("gender", mValues.get(position).getGender());
                 v.getContext().startActivity(intent);
             }
         });
@@ -72,6 +73,7 @@ public class MyStudentRecyclerViewAdapter extends RecyclerView.Adapter<MyStudent
         mValues.addAll(newList);
         notifyDataSetChanged();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

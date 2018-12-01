@@ -19,12 +19,14 @@ public class Student {
     private String id;
     private Date birthdate;
     private String classroom;
+    private String gender;
 
     public Student(){}
 
-    public Student(String name, String id){
+    public Student(String name, String id, String gender){
         this.name = name;
         this.id = id;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -41,6 +43,14 @@ public class Student {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
 

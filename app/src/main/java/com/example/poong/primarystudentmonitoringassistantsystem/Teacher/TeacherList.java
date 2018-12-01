@@ -72,7 +72,7 @@ public class TeacherList extends AppCompatActivity {
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
-                                    Teacher teacher = new Teacher(obj.getString("teacher_id"), obj.getString("name"));
+                                    Teacher teacher = new Teacher(obj.getString("teacherID"), obj.getString("teacherName"));
                                     teacherList.add(teacher);
                                     teacherAdapter.notifyDataSetChanged();
                                 }

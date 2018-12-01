@@ -255,14 +255,14 @@ public class AttendanceActivity extends AppCompatActivity implements SearchView.
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
-                                    Attendance attendance = new Attendance(obj.getInt("attendance_id"), obj.getString("attendance_status"), obj.getString("date"), obj.getString("student_id"), obj.getString("submission_status"), obj.getString("name"));
+                                    Attendance attendance = new Attendance(obj.getInt("attendanceID"), obj.getString("attendanceStatus"), obj.getString("attendanceDate"), obj.getString("studentID"), obj.getString("attendanceSubmission"), obj.getString("studentName"));
                                     attendancesList.add(attendance);
                                     attendanceAdapter.notifyDataSetChanged();
 
-                                    if(obj.getString("submission_status").equals("not submitted")){
+                                    if(obj.getString("attendanceSubmission").equals("not submitted")){
                                         submission = "not submitted";
                                     }
-                                    else if(obj.getString("submission_status").equals("submitted")){
+                                    else if(obj.getString("attendanceSubmission").equals("submitted")){
                                         submission = "submitted";
                                     }
                                     else{

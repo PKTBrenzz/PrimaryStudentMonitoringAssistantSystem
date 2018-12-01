@@ -75,6 +75,27 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
 
         getClassList();
 
+        setSpinnerClasses();
+
+//        Spinner spinnerClasses = findViewById(R.id.spinner_classes);
+//        spinnerClasses.setAdapter(classRoomAdapter);
+//
+//        spinnerClasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Classroom clickedClass = (Classroom) adapterView.getItemAtPosition(i);
+//                getStudentList(clickedClass.getClassID());
+//                String clickedClassName = clickedClass.getClassName();
+//                Toast.makeText(getApplicationContext(), clickedClassName, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//            }
+//        });
+    }
+
+    private void setSpinnerClasses() {
         Spinner spinnerClasses = findViewById(R.id.spinner_classes);
         spinnerClasses.setAdapter(classRoomAdapter);
 
@@ -112,6 +133,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
                                     mClassList.add(classroom);
                                     classRoomAdapter.notifyDataSetChanged();
                                 }
+                                setSpinnerClasses();
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),
@@ -164,7 +186,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
-                                    Student student = new Student(obj.getString("name"), obj.getString("student_id"));
+                                    Student student = new Student(obj.getString("studentName"), obj.getString("studentID"),obj.getString("studentGender"));
                                     studentList.add(student);
                                     myStudentRecyclerViewAdapter.notifyDataSetChanged();
                                 }

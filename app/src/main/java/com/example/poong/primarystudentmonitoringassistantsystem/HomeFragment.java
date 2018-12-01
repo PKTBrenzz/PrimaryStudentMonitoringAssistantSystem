@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mViewModel;
     private Button adttendanceButton, mShowTeacherButton;
 
-    private ImageButton attendanceButton, studentButton;
+    private ImageButton attendanceButton, studentButton, calendarButton;
     private TextView userName;
 
     private String identity = SharedPrefManager.getInstance(getActivity()).getUserIdentity();
@@ -58,6 +59,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), StudentList.class);
+                startActivity(intent);
+            }
+        });
+
+        calendarButton = view.findViewById(R.id.news);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CalendarActivity.class);
                 startActivity(intent);
             }
         });

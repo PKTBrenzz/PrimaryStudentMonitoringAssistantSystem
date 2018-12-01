@@ -186,8 +186,8 @@ public class StudentFragment extends Fragment implements SearchView.OnQueryTextL
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
-                                    Student student = new Student(obj.getString("name"), obj.getString("student_id"));
-                                    studentList.add(student);
+//                                    Student student = new Student(obj.getString("name"), obj.getString("student_id"));
+//                                    studentList.add(student);
                                     arrayAdapter.notifyDataSetChanged();
                                 }
 

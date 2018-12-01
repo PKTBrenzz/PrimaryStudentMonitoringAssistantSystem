@@ -39,7 +39,10 @@
         <activity android:name=".ParentDetail" />
         <activity android:name=".ChatMessageList" />
         <activity android:name=".Teacher.TeacherList" />
-        <activity android:name=".Students.StudentList"></activity>
+        <activity android:name=".Students.StudentList" />
+        <activity android:name=".StudentAttendance" />
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".PredictionDialog"></activity>
     </application>
 
 </manifest>

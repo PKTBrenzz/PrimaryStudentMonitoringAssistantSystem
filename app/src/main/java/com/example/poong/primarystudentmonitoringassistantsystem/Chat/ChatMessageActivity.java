@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ChatMessageList extends AppCompatActivity {
+public class ChatMessageActivity extends AppCompatActivity {
 
     private List<ChatMessage> messageList = new ArrayList<>();
     private RecyclerView recyclerView;

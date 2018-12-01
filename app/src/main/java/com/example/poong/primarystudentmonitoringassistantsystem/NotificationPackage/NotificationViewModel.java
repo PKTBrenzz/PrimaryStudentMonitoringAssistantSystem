@@ -1,4 +1,4 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.NotificationPackage;
 
 import android.arch.lifecycle.ViewModel;
 

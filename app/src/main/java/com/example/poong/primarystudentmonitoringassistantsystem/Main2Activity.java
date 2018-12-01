@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.Chat.ChatListFragment;
+import com.example.poong.primarystudentmonitoringassistantsystem.NotificationPackage.NotificationFragment;
 
 public class Main2Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 

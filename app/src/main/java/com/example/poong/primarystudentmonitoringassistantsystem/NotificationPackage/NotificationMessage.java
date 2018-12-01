@@ -1,4 +1,4 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.NotificationPackage;
 
 public class NotificationMessage {
     public String title;

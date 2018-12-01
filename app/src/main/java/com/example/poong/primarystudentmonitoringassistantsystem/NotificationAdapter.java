@@ -11,9 +11,9 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
-    private List<String> stringList = new ArrayList<>();
+    private List<NotificationMessage> stringList = new ArrayList<>();
 
-    public NotificationAdapter(List<String> messages){
+    public NotificationAdapter(List<NotificationMessage> messages){
         stringList = messages;
     }
 
@@ -25,7 +25,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.messageView.setText(stringList.get(position));
+        holder.titleView.setText(stringList.get(position).title);
+        holder.messageView.setText(stringList.get(position).body);
     }
 
     @Override
@@ -36,11 +37,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
+        public final TextView titleView;
         public final TextView messageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            titleView = itemView.findViewById(R.id.notify_title);
             messageView = (TextView) itemView.findViewById(R.id.notify_message);
         }
     }

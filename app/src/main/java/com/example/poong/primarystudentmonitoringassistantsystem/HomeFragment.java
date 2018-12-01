@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceActivity;
+import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage.StudentActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
 import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherList;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +27,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mViewModel;
     private Button adttendanceButton, mShowTeacherButton;
 
-    private ImageButton attendanceButton, studentButton, calendarButton;
+    private ImageButton attendanceButton, studentButton, calendarButton, eventButton;
     private TextView userName;
 
     private String identity = SharedPrefManager.getInstance(getActivity()).getUserIdentity();
@@ -72,6 +73,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        eventButton = view.findViewById(R.id.event);
+        eventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), StudentActivity.class);
+                startActivity(intent);
+            }
+        });
 //        mShowTeacherButton = view.findViewById(R.id.show_teacher);
 //        if(identity.equals("P")){
 //            mShowTeacherButton.setVisibility(View.VISIBLE);

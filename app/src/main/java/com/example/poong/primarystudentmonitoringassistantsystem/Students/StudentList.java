@@ -19,18 +19,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.Attendance;
-import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceActivity;
-import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceRecyclerViewAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoomAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
 import com.example.poong.primarystudentmonitoringassistantsystem.Constants;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
-import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.Teacher;
-import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherList;
-import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherRecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +52,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student);
+        setContentView(R.layout.activity_student_list);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

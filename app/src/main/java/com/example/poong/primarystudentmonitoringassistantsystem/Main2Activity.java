@@ -6,9 +6,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.example.poong.primarystudentmonitoringassistantsystem.Chat.ChatListFragment;
 
 public class Main2Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -45,9 +45,9 @@ public class Main2Activity extends AppCompatActivity implements BottomNavigation
             case R.id.navigation_home:
                 fragment = new HomeFragment();
                 break;
-            case R.id.navigation_student:
-                fragment = new StudentFragment();
-                break;
+//            case R.id.navigation_student:
+//                fragment = new StudentFragment();
+//                break;
             case R.id.navigation_dashboard:
                 fragment = new ChatListFragment();
                 break;

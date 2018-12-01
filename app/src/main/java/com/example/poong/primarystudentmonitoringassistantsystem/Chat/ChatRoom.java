@@ -1,4 +1,4 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.Chat;
 
 import java.util.List;
 

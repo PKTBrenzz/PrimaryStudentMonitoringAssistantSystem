@@ -1,4 +1,4 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.Chat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.poong.primarystudentmonitoringassistantsystem.R;
+import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

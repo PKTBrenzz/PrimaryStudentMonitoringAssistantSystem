@@ -3,6 +3,7 @@ package com.example.poong.primarystudentmonitoringassistantsystem;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NotificationFragment extends Fragment {
 
     private NotificationViewModel mViewModel;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
 
     public static NotificationFragment newInstance() {
         return new NotificationFragment();
@@ -31,22 +42,48 @@ public class NotificationFragment extends Fragment {
     public NotificationFragment(){}
 
     private RecyclerView mRecyclerView;
-
-    private List<String> message = new ArrayList<>();
+    private NotificationAdapter adapter;
+    private List<NotificationMessage> message = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        for(int i = 0; i < 20; i++){
-            message.add(String.valueOf(i));
-        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.notification_fragment, container, false);
+
+        DatabaseReference ref = database.getReference().child("notification").child(SharedPrefManager.getInstance(view.getContext()).getUserID());
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                NotificationMessage notificationMessage = dataSnapshot.getValue(NotificationMessage.class);
+                message.add(adapter.getItemCount(), notificationMessage);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -56,7 +93,8 @@ public class NotificationFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
 
-        mRecyclerView.setAdapter(new NotificationAdapter(message));
+        adapter = new NotificationAdapter(message);
+        mRecyclerView.setAdapter(adapter);
 
         return view;
     }

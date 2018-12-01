@@ -1,7 +1,5 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.Chat;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.poong.primarystudentmonitoringassistantsystem.R;
+import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

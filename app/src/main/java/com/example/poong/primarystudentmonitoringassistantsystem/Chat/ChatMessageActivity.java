@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.poong.primarystudentmonitoringassistantsystem.NotificationPackage.NotificationMessage;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
 import com.google.firebase.database.ChildEventListener;
@@ -63,6 +64,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                 if(!textbox.getText().toString().equals("")){
                     ref1.push().setValue(new ChatMessage(textbox.getText().toString(), currentUser, new Date().getTime()));
                     ref2.push().setValue(new ChatMessage(textbox.getText().toString(), currentUser, new Date().getTime()));
+                    mDatabase.getReference().child("notification").child(receiver).push().setValue(new NotificationMessage(currentUser + "has sent message", textbox.getText().toString(), new Date().getTime()));
                     textbox.setText("");
                 }
             }

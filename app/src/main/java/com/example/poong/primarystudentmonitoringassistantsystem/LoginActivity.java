@@ -244,6 +244,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         Log.d("Test", "SUCCESS");
                                     }
                                 });
+                                FirebaseMessaging.getInstance().subscribeToTopic(obj.getString("user_id")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Log.d("USER", "SUCCESS");
+                                    }
+                                });
                                 ref.child("user").child(obj.getString("user_id")).setValue(obj.getString("name"));
                                 startActivity(new Intent(getApplicationContext(), Main2Activity.class));
 

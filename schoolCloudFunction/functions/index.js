@@ -24,5 +24,5 @@ exports.sendNotification = functions.database.ref('/notification/{userId}/{pushI
                 }
             };
 
-            return admin.messaging().sendToTopic("test",message);
+            return admin.messaging().sendToTopic(userId, message);
         });

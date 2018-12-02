@@ -18,9 +18,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChatListFragment extends Fragment {
 
@@ -35,15 +38,31 @@ public class ChatListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    DatabaseReference userRef = database.getReference().child("user");
+    HashMap<String, String> users;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, String> userMap = (HashMap)dataSnapshot.getValue();
+                users = userMap;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String id = dataSnapshot.getValue(String.class);
-                chatRoomList.add(new ChatRoom(id));
+                chatRoomList.add(new ChatRoom(id,users.get(id)));
                 chatListAdapter.notifyDataSetChanged();
             }
 

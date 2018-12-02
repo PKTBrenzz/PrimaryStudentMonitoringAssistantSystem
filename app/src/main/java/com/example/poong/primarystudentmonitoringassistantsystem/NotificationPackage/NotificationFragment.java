@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +117,7 @@ public class NotificationFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.menuLogout:
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(SharedPrefManager.getInstance(getActivity()).getUserID());
                 SharedPrefManager.getInstance(getActivity()).logout();
                 getActivity().finish();
                 startActivity(new Intent(getActivity(), LoginActivity.class));

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 
     private Button sendButton;
     private EditText textbox;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,9 @@ public class ChatMessageActivity extends AppCompatActivity {
         ref2 = mDatabase.getReference().child("chat_room").child(receiver + "_" + currentUser);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
+        toolbar = findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
 
         textbox = findViewById(R.id.edittext_chatbox);
 

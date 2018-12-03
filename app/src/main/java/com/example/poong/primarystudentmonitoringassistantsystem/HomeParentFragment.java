@@ -10,18 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage.StudentActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
-import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class HomeFragment extends Fragment {
+public class HomeParentFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private HomeViewModel mViewModel;
@@ -32,8 +30,8 @@ public class HomeFragment extends Fragment {
 
     private String identity = SharedPrefManager.getInstance(getActivity()).getUserIdentity();
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static HomeParentFragment newInstance() {
+        return new HomeParentFragment();
     }
 
 

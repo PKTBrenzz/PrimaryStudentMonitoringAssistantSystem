@@ -21,7 +21,7 @@ public class Main2Activity extends AppCompatActivity implements BottomNavigation
 
         setContentView(R.layout.activity_main2);
 
-        loadFragment(new HomeFragment());
+        loadFragment(new HomeTeacherFragment());
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -44,7 +44,7 @@ public class Main2Activity extends AppCompatActivity implements BottomNavigation
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                fragment = new HomeFragment();
+                fragment = new HomeTeacherFragment();
                 break;
 //            case R.id.navigation_student:
 //                fragment = new StudentFragment();

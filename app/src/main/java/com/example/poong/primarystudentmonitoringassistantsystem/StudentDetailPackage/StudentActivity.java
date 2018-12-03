@@ -27,6 +27,7 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student2);
 
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Student Detail");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

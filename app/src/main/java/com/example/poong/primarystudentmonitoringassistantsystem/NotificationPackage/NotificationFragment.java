@@ -61,7 +61,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 NotificationMessage notificationMessage = dataSnapshot.getValue(NotificationMessage.class);
-                message.add(adapter.getItemCount(), notificationMessage);
+                message.add(0, notificationMessage);
                 adapter.notifyDataSetChanged();
             }
 
@@ -87,6 +87,7 @@ public class NotificationFragment extends Fragment {
         });
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitle("Notification");
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
@@ -117,7 +118,8 @@ public class NotificationFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.menuLogout:
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(SharedPrefManager.getInstance(getActivity()).getUserID());
+                FirebaseMessaging.getInstance()
+                        .unsubscribeFromTopic(SharedPrefManager.getInstance(getActivity()).getUserID());
                 SharedPrefManager.getInstance(getActivity()).logout();
                 getActivity().finish();
                 startActivity(new Intent(getActivity(), LoginActivity.class));

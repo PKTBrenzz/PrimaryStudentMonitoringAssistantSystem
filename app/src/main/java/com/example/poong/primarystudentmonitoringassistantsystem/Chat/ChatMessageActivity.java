@@ -53,6 +53,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 
         toolbar = findViewById(R.id.toolbar3);
+        toolbar.setTitle(intent.getStringExtra("ROOM"));
         setSupportActionBar(toolbar);
 
         textbox = findViewById(R.id.edittext_chatbox);
@@ -64,7 +65,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                 if(!textbox.getText().toString().equals("")){
                     ref1.push().setValue(new ChatMessage(textbox.getText().toString(), currentUser, new Date().getTime()));
                     ref2.push().setValue(new ChatMessage(textbox.getText().toString(), currentUser, new Date().getTime()));
-                    mDatabase.getReference().child("notification").child(receiver).push().setValue(new NotificationMessage(currentUser + "has sent message", textbox.getText().toString(), new Date().getTime()));
+                    mDatabase.getReference().child("notification").child(receiver).push().setValue(new NotificationMessage(currentUser + " has sent message", textbox.getText().toString(), new Date().getTime()));
                     textbox.setText("");
                 }
             }

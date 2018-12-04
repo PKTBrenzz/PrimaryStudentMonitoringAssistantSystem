@@ -99,7 +99,7 @@ public class StudentActivity extends AppCompatActivity {
                         context.startActivity(noteIntent);
                         break;
                     case 1:
-
+//open dialog
                         break;
                     case 2:
                         break;

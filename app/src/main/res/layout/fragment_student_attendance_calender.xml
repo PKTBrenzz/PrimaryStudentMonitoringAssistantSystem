@@ -8,138 +8,260 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffe95451"
-        android:orientation="horizontal"
-        android:layout_below="@+id/toolbar">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#FF3585C2"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/textCalendar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Month"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-        </RelativeLayout>
+            <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                android:id="@+id/compactcalendar_view"
+                android:layout_width="fill_parent"
+                android:layout_height="249dp"
+                android:layout_marginTop="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:compactCalendarBackgroundColor="#ffffff"
+                app:compactCalendarCurrentDayBackgroundColor="#FF3585C2"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="#a8d3f4"
+                app:compactCalendarMultiEventIndicatorColor="#000000"
+                app:compactCalendarTargetHeight="250dp"
+                app:compactCalendarTextColor="#000000"
+                app:compactCalendarTextSize="12sp"
+                android:layout_below="@id/linearLayout"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@id/compactcalendar_view"
+                android:orientation="horizontal"
+                android:id="@+id/legend"
+                android:background="#ffffff">
 
-                <TextView
-                    android:id="@+id/textCalendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Month"
-                    android:textColor="#ffffff" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            app:srcCompat="@drawable/circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Present"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@drawable/circle"
+                            android:tint="@android:color/holo_red_dark"
+                            android:layout_marginRight="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"
+                            android:text="Absent" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        android:id="@+id/compactcalendar_view"
-        android:layout_width="fill_parent"
-        android:layout_height="249dp"
-        android:layout_marginTop="0dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:compactCalendarBackgroundColor="#ffe95451"
-        app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
-        app:compactCalendarMultiEventIndicatorColor="#fff"
-        app:compactCalendarTargetHeight="250dp"
-        app:compactCalendarTextColor="#fff"
-        app:compactCalendarTextSize="12sp"
-        android:layout_below="@id/linearLayout"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/compactcalendar_view"
-        android:id="@+id/legend">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/legend"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:text="Month" />
+                    android:textSize="17dp"
+                    android:text="Attendance Summary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/compactcalendar_view"
+                    android:orientation="horizontal"
+                    android:id="@+id/attendanceSummary"
+                    android:layout_marginTop="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:text="Working days:  " />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:text="present"
+                                android:id="@+id/present"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:text="Absent:  " />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#000000"
+                                android:text="Absent"
+                                android:id="@+id/absent"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:id="@+id/piechart"
+                    android:layout_marginBottom="30dp"/>
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/legend"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="Pie chart" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/piechart" />
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

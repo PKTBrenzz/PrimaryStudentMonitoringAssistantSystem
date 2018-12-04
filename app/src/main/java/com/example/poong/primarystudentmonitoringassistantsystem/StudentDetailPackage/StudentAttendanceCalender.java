@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
@@ -46,13 +52,15 @@ import java.util.Map;
  */
 public class StudentAttendanceCalender extends Fragment {
 
-    private TextView textView;
+    private TextView textView, mTotal, mAbsent;
     private Date date;
     CompactCalendarView compactCalendar;
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
 
     public PieChart pieChart;
     public ArrayList<PieEntry> PieEntries = new ArrayList<>();
+
+    private int workingDays = 0;
 
     public StudentAttendanceCalender() {
         // Required empty public constructor
@@ -70,6 +78,9 @@ public class StudentAttendanceCalender extends Fragment {
 
         textView = view.findViewById(R.id.textCalendar);
         textView.setText(dateFormatMonth.format(date));
+
+        mTotal = view.findViewById(R.id.present);
+        mAbsent = view.findViewById(R.id.absent);
 
         compactCalendar = (CompactCalendarView) view.findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
@@ -110,13 +121,14 @@ public class StudentAttendanceCalender extends Fragment {
         pieChart.setDrawHoleEnabled(false);
         pieChart.setTransparentCircleRadius(61f);
 
-        getAttendancePie();
+        getAttendancePie(studentID);
 
         return view;
     }
 
     private void getAttendancePie(final String studentID) {
         PieEntries.clear();
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 ConstantURLs.URL_ATTENDANCE_COUNT,
@@ -127,16 +139,20 @@ public class StudentAttendanceCalender extends Fragment {
                             JSONObject jsonObject = new JSONObject(response);
 
                             if(!jsonObject.getBoolean("error")) {
-                                JSONArray jsonArray = jsonObject.getJSONArray("result");
+                                JSONArray jsonArray = jsonObject.getJSONArray("attendance");
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
 
                                     String attendanceStatus = obj.getString("attendanceStatus");
-                                    String attendanceCount = obj.getString("Count");
+                                    Integer attendanceCount = obj.getInt("Count");
 
-                                    PieChart.add(new RadarEntry(mark.floatValue()));
-                                    CourseLabels.add(course);
+                                    if(attendanceStatus.equals("absent")){
+                                        mAbsent.setText(attendanceCount.toString());
+                                    }
+                                    workingDays = workingDays + attendanceCount;
+
+                                    PieEntries.add(new PieEntry(attendanceCount.floatValue(), attendanceStatus));
                                 }
                             }else{
                                 Toast.makeText(
@@ -149,7 +165,22 @@ public class StudentAttendanceCalender extends Fragment {
                             e.printStackTrace();
                         }
 
+                        mTotal.setText(String.valueOf(workingDays));
 
+                        pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+                        PieDataSet dataSet = new PieDataSet(PieEntries, "Attendance Analysis");
+                        dataSet.setSliceSpace(3f);
+                        dataSet.setSelectionShift(5f);
+                        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+                        PieData data = new PieData(dataSet);
+                        data.setValueFormatter(new PercentFormatter());
+                        data.setValueTextSize(10f);
+                        data.setValueTextColor(Color.BLACK);
+
+                        pieChart.setData(data);
+                        pieChart.invalidate();
                     }
                 },
                 new Response.ErrorListener() {
@@ -201,11 +232,11 @@ public class StudentAttendanceCalender extends Fragment {
                                         long milliseconds = date.getTime();
 
                                         if(attendanceStatus.equals("present")){
-                                            Event present = new Event(Color.BLACK, milliseconds, "Present");
+                                            Event present = new Event(Color.BLUE, milliseconds, "Present");
                                             compactCalendar.addEvent(present);
                                         }
                                         else{
-                                            Event absent = new Event(Color.WHITE, milliseconds, "Absent");
+                                            Event absent = new Event(Color.RED, milliseconds, "Absent");
                                             compactCalendar.addEvent(absent);
                                         }
 

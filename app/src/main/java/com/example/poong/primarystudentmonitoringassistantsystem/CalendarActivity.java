@@ -54,7 +54,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onDayClick(Date dateClicked) {
                 Context context = getApplicationContext();
 
-                if (dateClicked.toString().compareTo("Fri Oct 21 00:00:00 AST 2016") == 0) {
+                if (dateClicked.toString().compareTo("Mon Dec 03 00:00:00 AST 2018") == 0) {
                     Toast.makeText(context, "Teachers' Professional Day", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(context, "No Events Planned for that day", Toast.LENGTH_SHORT).show();

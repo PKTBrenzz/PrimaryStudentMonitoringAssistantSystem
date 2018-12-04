@@ -52,14 +52,15 @@ import java.util.Map;
 public class StudentGradeAnalyticsFragment extends Fragment {
 
     public RadarChart radarChart;
-
-
-    private LineChart lineChart;
+    public LineChart lineChart;
 
     public ArrayList<RadarEntry> RadarEntries = new ArrayList<>();
     public ArrayList<String> CourseLabels = new ArrayList<>();
 
+    public ArrayList<Entry> LineEntries = new ArrayList<>();
+
     List<String> monthLabel = new ArrayList<>();
+
     public StudentGradeAnalyticsFragment() {
         // Required empty public constructor
     }
@@ -121,11 +122,13 @@ public class StudentGradeAnalyticsFragment extends Fragment {
 //        l.setTextColor(Color.WHITE);
 
 
-//        lineChart = view.findViewById(R.id.linechart);
-//        monthLabel.add("January");
-//        monthLabel.add("February");
-//        monthLabel.add("March");
-//
+        lineChart = view.findViewById(R.id.linechart);
+
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(false);
+
+        getStudentLineResult(studentID);
+
 //        ArrayList<Entry> yData1 = new ArrayList<>();
 //        yData1.add(new Entry(1, 55));
 //        yData1.add(new Entry(2, 66));
@@ -200,6 +203,76 @@ public class StudentGradeAnalyticsFragment extends Fragment {
                             set.setDrawValues(!set.isDrawValuesEnabled());
                         }
                         radarChart.invalidate();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(
+                                getActivity().getApplicationContext(),
+                                error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("studentID", studentID);
+//                params.put("student_id", "S00001");
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(getActivity()).addToRequestQueue(stringRequest);
+    }
+
+    private void getStudentLineResult(final String studentID) {
+        LineEntries.clear();
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                ConstantURLs.URL_STUDENT_LINE_RESULT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if(!jsonObject.getBoolean("error")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject obj = jsonArray.getJSONObject(i);
+
+                                    String course = obj.getString("courseName").trim();
+                                    Double mark = obj.getDouble("mark");
+                                    LineEntries.clear();
+                                    LineEntries.add(new Entry(0, mark.floatValue()));
+
+                                    LineDataSet englishSet = new LineDataSet(LineEntries, "English");
+
+                                    englishSet.setFillAlpha(110);
+
+                                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                                    dataSets.add(englishSet);
+
+                                    LineData data = new LineData(dataSets);
+
+                                    lineChart.setData(data);
+
+                                }
+                            }else{
+                                Toast.makeText(
+                                        getActivity().getApplicationContext(),
+                                        jsonObject.getString("message"),
+                                        Toast.LENGTH_LONG
+                                ).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {

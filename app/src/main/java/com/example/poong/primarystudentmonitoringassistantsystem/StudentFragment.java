@@ -28,7 +28,6 @@ import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoom
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.MyStudentRecyclerViewAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.Student;
-import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -112,7 +111,7 @@ public class StudentFragment extends Fragment implements SearchView.OnQueryTextL
     private void loadClassList() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_CLASSROOM_LIST,
+                ConstantURLs.URL_CLASSROOM_LIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -174,7 +173,7 @@ public class StudentFragment extends Fragment implements SearchView.OnQueryTextL
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_STUDENT_LIST,
+                ConstantURLs.URL_STUDENT_LIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

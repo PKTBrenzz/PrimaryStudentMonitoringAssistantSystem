@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoomAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
-import com.example.poong.primarystudentmonitoringassistantsystem.Constants;
+import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
@@ -116,7 +116,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
     private void getClassList() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_CLASSROOM_LIST,
+                ConstantURLs.URL_CLASSROOM_LIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -173,7 +173,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_STUDENT_LIST,
+                ConstantURLs.URL_STUDENT_LIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

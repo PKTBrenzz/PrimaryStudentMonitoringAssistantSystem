@@ -59,6 +59,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
         setContentView(R.layout.activity_student_list);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Student List");
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.student_list);
@@ -223,7 +224,7 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
                 Map<String, String> params = new HashMap<>();
                 //For teacher
                 params.put("classID", String.valueOf(classID));
-                //For Parent
+                //For Parents
 //                params.put("user_id", SharedPrefManager.getInstance(getActivity()).getUserID());
                 return params;
             }

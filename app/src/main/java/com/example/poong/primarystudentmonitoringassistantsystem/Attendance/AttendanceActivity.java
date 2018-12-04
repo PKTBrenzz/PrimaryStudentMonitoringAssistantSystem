@@ -75,6 +75,7 @@ public class AttendanceActivity extends AppCompatActivity implements SearchView.
         progressDialog.setMessage("Loading");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Attendance");
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.attendanceRecycleView);

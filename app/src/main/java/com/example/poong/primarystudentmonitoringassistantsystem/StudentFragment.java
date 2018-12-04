@@ -225,7 +225,7 @@ public class StudentFragment extends Fragment implements SearchView.OnQueryTextL
                 Map<String, String> params = new HashMap<>();
                 //For teacher
                 params.put("classID", String.valueOf(classID));
-                //For Parent
+                //For Parents
 //                params.put("user_id", SharedPrefManager.getInstance(getActivity()).getUserID());
                 return params;
             }

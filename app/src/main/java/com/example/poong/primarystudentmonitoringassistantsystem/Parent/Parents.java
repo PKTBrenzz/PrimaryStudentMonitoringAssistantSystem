@@ -1,10 +1,10 @@
-package com.example.poong.primarystudentmonitoringassistantsystem;
+package com.example.poong.primarystudentmonitoringassistantsystem.Parent;
 
 /**
  *
  */
 
-public class Parent {
+public class Parents {
 
     public String name;
     public String id;

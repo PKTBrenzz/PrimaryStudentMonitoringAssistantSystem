@@ -14,7 +14,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -222,7 +221,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void userLogin(final String email, final String password) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_LOGIN,
+                ConstantURLs.URL_LOGIN,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

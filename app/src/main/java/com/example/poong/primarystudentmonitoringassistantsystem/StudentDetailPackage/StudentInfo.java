@@ -15,11 +15,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.poong.primarystudentmonitoringassistantsystem.Constants;
+import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
-import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
-import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.Teacher;
 import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherProfile;
 
 import org.json.JSONArray;
@@ -73,7 +71,7 @@ public class StudentInfo extends Fragment {
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_STUDENT_DETAILS,
+                ConstantURLs.URL_STUDENT_DETAILS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

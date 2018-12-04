@@ -126,11 +126,12 @@ public class StudentDetail extends AppCompatActivity implements PredictionDialog
         radarChart.setWebColorInner(Color.LTGRAY);
         radarChart.setWebAlpha(50);
 
-//        loadStudentGrade();
+        getStudentRadarResult();
 
         radarChart.animateXY(1400, 1400, Easing.EasingOption.EaseInOutQuad, Easing.EasingOption.EaseInOutQuad);
 
         XAxis xAxis = radarChart.getXAxis();
+        xAxis.setTextColor(Color.WHITE);
         xAxis.setTextSize(9f);
         xAxis.setYOffset(0f);
         xAxis.setXOffset(0f);
@@ -144,8 +145,6 @@ public class StudentDetail extends AppCompatActivity implements PredictionDialog
                 return labels.get((int) value % labels.size());
             }
         });
-
-        xAxis.setTextColor(Color.WHITE);
 
         YAxis yAxis = radarChart.getYAxis();
         yAxis.setLabelCount(5, false);
@@ -169,11 +168,95 @@ public class StudentDetail extends AppCompatActivity implements PredictionDialog
 
     }
 
+    private void getStudentRadarResult(){
+        final ArrayList<RadarEntry> entries = new ArrayList<>();
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                ConstantURLs.URL_STUDENT_RADAR_RESULT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if(!jsonObject.getBoolean("error")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject obj = jsonArray.getJSONObject(i);
+
+                                    String course = obj.getString("courseName").trim();
+                                    Double mark = obj.getDouble("averageMark");
+
+                                    entries.add(new RadarEntry(mark.floatValue()));
+                                    labels.add(course);
+                                }
+                            }else{
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        jsonObject.getString("message"),
+                                        Toast.LENGTH_LONG
+                                ).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        RadarDataSet set1 = new RadarDataSet(entries, "Course Average Mark");
+                        set1.setColor(Color.RED);
+                        set1.setFillColor(Color.RED);
+                        set1.setDrawFilled(true);
+                        set1.setFillAlpha(180);
+                        set1.setLineWidth(1f);
+                        set1.setDrawHighlightCircleEnabled(true);
+                        set1.setDrawHighlightIndicators(false);
+
+                        ArrayList<IRadarDataSet> sets = new ArrayList<>();
+                        sets.add(set1);
+
+                        RadarData data = new RadarData(sets);
+                        data.setValueTextSize(8f);
+                        data.setDrawValues(false);
+                        data.setValueTextColor(Color.WHITE);
+
+                        radarChart.setData(data);
+                        for(IDataSet<?> set : radarChart.getData().getDataSets()){
+                            set.setDrawValues(!set.isDrawValuesEnabled());
+                        }
+                        radarChart.invalidate();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("studentID", intent.getStringExtra("STUDENT_ID"));
+//                params.put("student_id", "S00001");
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
+
 //    private void loadStudentGrade() {
 //        final ArrayList<RadarEntry> entries = new ArrayList<>();
 //        StringRequest stringRequest = new StringRequest(
 //                Request.Method.POST,
-//                Constants.URL_STUDENT_DETAIL,
+//                ConstantURLs.URL_STUDENT_DETAIL,
 //                new Response.Listener<String>() {
 //                    @Override
 //                    public void onResponse(String response) {

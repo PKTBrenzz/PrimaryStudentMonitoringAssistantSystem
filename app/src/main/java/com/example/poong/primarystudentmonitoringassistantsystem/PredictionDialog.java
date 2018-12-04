@@ -2,11 +2,9 @@ package com.example.poong.primarystudentmonitoringassistantsystem;
 
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.Teacher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,7 +118,7 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_ATTENDANCE_COUNT,
+                ConstantURLs.URL_ATTENDANCE_COUNT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -190,7 +187,7 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
     public void predict(final String studentID, final String gender, final String StageID, final String Semester, final String StudentAbsenceDays, final String raisedhands, final String Discussion, final String currentDate) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_PREDICTION,
+                ConstantURLs.URL_PREDICTION,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

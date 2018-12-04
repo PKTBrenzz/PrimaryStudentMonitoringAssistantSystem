@@ -11,7 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.poong.primarystudentmonitoringassistantsystem.Constants;
+import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
@@ -60,7 +60,7 @@ public class TeacherList extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_TEACHER_LIST,
+                ConstantURLs.URL_TEACHER_LIST,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

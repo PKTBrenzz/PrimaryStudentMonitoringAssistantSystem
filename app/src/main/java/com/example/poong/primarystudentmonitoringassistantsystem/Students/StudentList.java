@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,6 +37,9 @@ import java.util.List;
 import java.util.Map;
 
 public class StudentList extends AppCompatActivity implements SearchView.OnQueryTextListener{
+
+
+    TextView nameText, genderText, dobText, parentText, teacherText, classText;
 
     private Toolbar toolbar;
 
@@ -266,5 +270,63 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
         myStudentRecyclerViewAdapter.setFilter(searchedList);
         return true;
     }
+
+
+
+
+
+
+//    nameText = findViewById(R.id.studentName);
+//        genderText = findViewById(R.id.gender);
+//        dobText = findViewById(R.id.dob);
+//        parentText = findViewById(R.id.parentName);
+//        teacherText = findViewById(R.id.teacher_list);
+//        classText = findViewById(R.id.className);
+
+
+
+//    private void getStudentInfo() {
+//        StringRequest stringRequest = new StringRequest(
+//                Request.Method.POST,
+//                "https://000webhostapp.com/school_database/v1/getStudentDetails.php",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject obj = new JSONObject(response);
+//                            if(!obj.getBoolean("error")) {
+//                                nameText.setText(obj.getString("studentName"));
+//                                genderText.setText(obj.getString("studentGender"));
+//                                dobText.setText(obj.getString("studentDOB"));
+//                                parentText.setText(obj.getString("parentName"));
+//                                teacherText.setText(obj.getString("teacherName"));
+//                                classText.setText(obj.getString("className"));
+//                            }else{
+//                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(
+//                                getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG
+//                        ).show();
+//                    }
+//                })
+//        {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("studentID", SharedPrefManager.getInstance(getApplicationContext()).getUserID());
+//                return params;
+//            }
+//        };
+//
+//        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+//    }
 }
 

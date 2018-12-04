@@ -10,4 +10,7 @@ public class Constants {
     public static final String URL_ATTENDANCE_LIST = ROOT_URL + "getAttendanceList.php";
     public static final String URL_TEACHER_LIST = ROOT_URL + "getTeacherList.php";
     public static final String URL_CLASSROOM_LIST = ROOT_URL + "getClassroomList.php";
+    public static final String URL_ATTENDANCE_COUNT = ROOT_URL + "getAttendanceCount.php";
+    public static final String URL_PREDICTION = ROOT_URL + "predictPerformance.php";
+    public static final String URL_STUDENT_DETAILS = ROOT_URL + "getStudentDetails.php";
 }

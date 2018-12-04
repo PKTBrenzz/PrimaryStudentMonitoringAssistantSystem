@@ -45,7 +45,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/classTextView"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Class"
@@ -67,7 +67,29 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/studentIDTextView"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Matric No."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name" />
+
+                <TextView
+                    android:id="@+id/studentID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="S00000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dobTextView"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Birth Date"
@@ -79,6 +101,28 @@
                     android:layout_height="wrap_content"
                     android:text="20/20/20" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/genderTextView"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name" />
+
+                <TextView
+                    android:id="@+id/gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="gender" />
             </LinearLayout>
 
 
@@ -102,7 +146,7 @@
                     android:id="@+id/parent_name"
                     android:layout_width="271dp"
                     android:layout_height="wrap_content"
-                    android:text="Poong's Father"
+                    android:text="Parent's name"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp" />
             </LinearLayout>

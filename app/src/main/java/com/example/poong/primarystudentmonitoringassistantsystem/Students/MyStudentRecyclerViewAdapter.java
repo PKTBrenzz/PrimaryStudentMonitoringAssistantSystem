@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceRecyclerViewAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetail;
+import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage.StudentActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
@@ -54,7 +55,9 @@ public class MyStudentRecyclerViewAdapter extends RecyclerView.Adapter<MyStudent
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), StudentDetail.class);
+                Intent intent = new Intent(v.getContext(), StudentActivity.class);
+
+//                Intent intent = new Intent(v.getContext(), StudentDetail.class);
                 intent.putExtra("NAME", mValues.get(position).getName());
                 intent.putExtra("STUDENT_ID", mValues.get(position).getId());
                 intent.putExtra("gender", mValues.get(position).getGender());

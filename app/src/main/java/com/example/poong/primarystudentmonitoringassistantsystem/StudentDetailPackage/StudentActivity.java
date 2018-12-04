@@ -1,5 +1,6 @@
 package com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.example.poong.primarystudentmonitoringassistantsystem.PredictionDialog;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 
 import java.util.ArrayList;
@@ -19,12 +21,18 @@ public class StudentActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private String studentId;
+
+    Intent intent;
+
     public StudentActivity(){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student2);
+
+        intent = getIntent();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Student Detail");
@@ -67,6 +75,12 @@ public class StudentActivity extends AppCompatActivity {
         }
 
         public void addFragment(Fragment fragment, String title) {
+            //TODO: bundle
+            Bundle bundle = new Bundle();
+            bundle.putString("studentID", intent.getStringExtra("STUDENT_ID"));
+
+            fragment.setArguments(bundle);
+
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

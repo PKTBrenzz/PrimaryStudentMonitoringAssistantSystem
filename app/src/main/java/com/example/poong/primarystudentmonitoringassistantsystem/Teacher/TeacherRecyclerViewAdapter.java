@@ -42,7 +42,9 @@ public class TeacherRecyclerViewAdapter extends RecyclerView.Adapter<TeacherRecy
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               TODO: NEXT ACTION
+                Intent intent = new Intent(v.getContext(), TeacherProfile.class);
+                intent.putExtra("profileEmail", items.get(position).getTeacher_email());
+                v.getContext().startActivity(intent);
             }
         });
     }

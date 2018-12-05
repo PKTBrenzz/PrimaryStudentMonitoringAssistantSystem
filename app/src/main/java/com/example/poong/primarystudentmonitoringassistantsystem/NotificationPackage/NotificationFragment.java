@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.LoginActivity;
+import com.example.poong.primarystudentmonitoringassistantsystem.LoginActivity2;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
 import com.google.firebase.database.ChildEventListener;
@@ -122,7 +123,7 @@ public class NotificationFragment extends Fragment {
                         .unsubscribeFromTopic(SharedPrefManager.getInstance(getActivity()).getUserID());
                 SharedPrefManager.getInstance(getActivity()).logout();
                 getActivity().finish();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(), LoginActivity2.class));
                 break;
         }
 

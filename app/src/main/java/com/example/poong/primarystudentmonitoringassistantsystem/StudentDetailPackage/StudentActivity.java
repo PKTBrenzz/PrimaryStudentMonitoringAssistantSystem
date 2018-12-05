@@ -13,17 +13,54 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.PredictionDialog;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
+import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetail;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentActivity extends AppCompatActivity {
+public class StudentActivity extends AppCompatActivity implements PredictionDialog.OnCompleteListener{
+
+    @Override
+    public void onComplete(String time) {
+        if(time.equals("L")){
+            time = "Bad";
+
+        }
+        else if(time.equals("M")){
+            time = "Average";
+        }
+        else{
+            time = "Good";
+        }
+
+        mClassPerformanceTextView.setText(getResources().getString(R.string.predict) + time);
+        AlertDialog.Builder builder = new AlertDialog.Builder(StudentActivity.this);
+        builder.setTitle("Result");
+        builder.setMessage(getResources().getString(R.string.predict) + time);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private TextView mClassPerformanceTextView;
+
+    private SpannableStringBuilder spannableStringBuilder;
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -43,9 +80,11 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student2);
 
-
-
         intent = getIntent();
+
+        spannableStringBuilder = new SpannableStringBuilder();
+
+        mClassPerformanceTextView = findViewById(R.id.classPerformanceTextView);
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Student Detail");
@@ -99,7 +138,14 @@ public class StudentActivity extends AppCompatActivity {
                         context.startActivity(noteIntent);
                         break;
                     case 1:
-//open dialog
+                        Bundle bundle = new Bundle();
+                        bundle.putString("studentID", intent.getStringExtra("STUDENT_ID"));
+                        bundle.putString("gender", intent.getStringExtra("gender"));
+
+                        PredictionDialog predictionDialog = new PredictionDialog();
+                        predictionDialog.setArguments(bundle);
+
+                        predictionDialog.show(getSupportFragmentManager(), "my_dialog");
                         break;
                     case 2:
                         break;

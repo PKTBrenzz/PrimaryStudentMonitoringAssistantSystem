@@ -19,6 +19,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_attendance">Attendance</string>
     <string name="title_activity_student_detail">StudentDetail</string>
+    <string name="predict">Performance predicted: \u0020</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

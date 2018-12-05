@@ -2,6 +2,7 @@ package com.example.poong.primarystudentmonitoringassistantsystem;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -35,7 +36,9 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
 
     private OnCompleteListener mListener;
 
-    private EditText mGenderText, mAttendanceText, mStageID, mSemester, mRaisedhands, mDiscussion;
+    private ProgressDialog progressDialog;
+
+    private EditText mGenderText, mAttendanceText, mRaisedhands, mDiscussion;
     private String absenceCount = "";
     private Date date;
     private String classPredicted = "";
@@ -54,20 +57,16 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_prediction_dialog, null);
 
-        mStageID = view.findViewById(R.id.Stage1D);
-        mSemester = view.findViewById(R.id.Semester);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Predicting...");
+
         mRaisedhands = view.findViewById(R.id.raisedhands);
         mDiscussion = view.findViewById(R.id.Discussion);
 
         getAbsencesCount(studentID, view);
 
         mGenderText = view.findViewById(R.id.gender);
-        final String gender;
-        if(getArguments().getString("gender").equals("Male")){
-            gender = "M";
-        }else{
-            gender = "F";
-        }
+        final String gender = getArguments().getString("gender");
 
         mGenderText.setText(gender);
 
@@ -76,19 +75,12 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                String stageID = mStageID.getText().toString().trim();
-                String semester = mSemester.getText().toString().trim();
-                String raisedhands = mRaisedhands.getText().toString().trim();
-                String discussion = mDiscussion.getText().toString().trim();
+                double raisedhands = Double.parseDouble(mRaisedhands.getText().toString().trim());
+                double discussion = Double.parseDouble(mDiscussion.getText().toString().trim());
 //                predict(studentID,gender,"afternoon", "F", absenceCount,"15", "20", currentDate);
 
-                predict(studentID,gender,stageID, semester, absenceCount,raisedhands, discussion, currentDate);
+                predict(studentID,gender, absenceCount,raisedhands, discussion, currentDate);
 
-//                Toast.makeText(
-//                        getActivity().getApplicationContext(),
-//                        classPredicted,
-//                        Toast.LENGTH_LONG
-//                ).show();
             }
         });
 
@@ -143,7 +135,7 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
                                         }
                                     }
                                 }
-                                mAttendanceText.setText(absenceCount);
+                                mAttendanceText.setText(absenceCount + "days");
                                 Toast.makeText(
                                         getActivity().getApplicationContext(),
                                         absenceCount,
@@ -184,7 +176,12 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
         RequestHandler.getInstance(getActivity().getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
-    public void predict(final String studentID, final String gender, final String StageID, final String Semester, final String StudentAbsenceDays, final String raisedhands, final String Discussion, final String currentDate) {
+    public void predict(final String studentID, final String gender, final String StudentAbsenceDays, double raisedhands,  double Discussion, final String currentDate) {
+        progressDialog.show();
+
+        final double mRaisedHands = (raisedhands - 0.1) * 10;
+        final double mDiscussion = (Discussion - 0.1) * 10;
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 ConstantURLs.URL_PREDICTION,
@@ -200,7 +197,6 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
 
-                                    Log.d("TTT",obj.getString("Class"));
                                     classPredicted = obj.getString("Class");
                                 }
 
@@ -217,6 +213,8 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -224,7 +222,7 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
                     public void onErrorResponse(VolleyError error) {
 
                         Toast.makeText(
-                                getActivity().getApplicationContext(),
+                                getActivity(),
                                 error.getMessage(),
                                 Toast.LENGTH_LONG
                         ).show();
@@ -236,11 +234,9 @@ public class PredictionDialog extends android.support.v4.app.DialogFragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("studentID", studentID);
                 params.put("gender", gender);
-                params.put("StageID", StageID);
-                params.put("Semester", Semester);
                 params.put("StudentAbsenceDays", StudentAbsenceDays);
-                params.put("raisedhands",raisedhands);
-                params.put("Discussion", Discussion);
+                params.put("raisedhands",String.valueOf(mRaisedHands));
+                params.put("Discussion", String.valueOf(mDiscussion));
                 params.put("predictDate", currentDate);
                 return params;
             }

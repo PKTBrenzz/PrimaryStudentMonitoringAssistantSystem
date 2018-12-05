@@ -100,7 +100,8 @@ public class AttendanceActivity extends AppCompatActivity implements SearchView.
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Classroom clickedClass = (Classroom) adapterView.getItemAtPosition(i);
-                getStudentAttendance("2018-11-24",clickedClass.getClassID());
+//                getStudentAttendance("2018-11-24",clickedClass.getClassID());
+                getStudentAttendance(currentDate,clickedClass.getClassID());
                 String clickedClassName = clickedClass.getClassName();
                 Toast.makeText(getApplicationContext(), clickedClassName, Toast.LENGTH_SHORT).show();
             }
@@ -324,12 +325,15 @@ public class AttendanceActivity extends AppCompatActivity implements SearchView.
         attendanceAdapter.notifyDataSetChanged();
         for (int i = 0; i < attendancesList.size(); i++) {
             attendancesList.get(i).setSubmission_status("submitted");
-//            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("notification").child(attendancesList.get(i).getParentID()).push();
-//            NotificationMessage message = new NotificationMessage("Attendance Notification",
-//                    attendancesList.get(i).getStudentName() + " is " + attendancesList.get(i).getAttendance_status() + " today",new Date().getTime());
-//            message.data.put("tag", "student");
-//            message.data.put("student", attendancesList.get(i).getStudent_id());
-//            ref.setValue(message);
+
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("notification").child(attendancesList.get(i).getParentID()).push();
+            NotificationMessage message = new NotificationMessage("Attendance Notification",
+                    attendancesList.get(i).getStudentName() + " is " + attendancesList.get(i).getAttendance_status() + " today",new Date().getTime());
+            HashMap<String,String > nData = new HashMap<>();
+            nData.put("tag","student");
+            nData.put("student", attendancesList.get(i).getStudent_id());
+            message.data = nData;
+            ref.setValue(message);
         }
         attendanceAdapter.notifyDataSetChanged();
 
@@ -345,9 +349,6 @@ public class AttendanceActivity extends AppCompatActivity implements SearchView.
                 e.printStackTrace();
             }
         }
-
-        Log.d("TTT",myarray.toString());
-        Toast.makeText(AttendanceActivity.this, myarray.toString(),Toast.LENGTH_LONG).show();
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,

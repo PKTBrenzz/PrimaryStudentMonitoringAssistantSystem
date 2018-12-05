@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class TeacherProfile extends AppCompatActivity {
         mTeacherEmail = findViewById(R.id.textView18);
         mTeacherPhone = findViewById(R.id.textView20);
 
+        getTeacherProfile();
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +70,7 @@ public class TeacherProfile extends AppCompatActivity {
             }
         });
 
-        getTeacherProfile();
+
     }
 
     private void setDialog(){
@@ -111,7 +113,7 @@ public class TeacherProfile extends AppCompatActivity {
                                 mTeacherEmail.setText(obj.getString("teacherEmail"));
                                 mTeacherPhone.setText("+60" + obj.getString("teacherPhone"));
                                 setDialog();
-
+                                Log.d("WWWW",name);
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),

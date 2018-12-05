@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -57,7 +58,8 @@ public class StudentGradeAnalyticsFragment extends Fragment {
     public ArrayList<RadarEntry> RadarEntries = new ArrayList<>();
     public ArrayList<String> CourseLabels = new ArrayList<>();
 
-    public ArrayList<Entry> LineEntries = new ArrayList<>();
+//    public ArrayList<Entry> LineEntries = new ArrayList<>();
+public  ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
     List<String> monthLabel = new ArrayList<>();
 
@@ -74,15 +76,17 @@ public class StudentGradeAnalyticsFragment extends Fragment {
         String studentID = getArguments().getString("studentID");
 
         radarChart = (RadarChart) view.findViewById(R.id.radarchart);
-        radarChart.setBackgroundColor(Color.rgb(60, 65, 82));
+//        radarChart.setBackgroundColor(Color.rgb(60, 65, 82));
+//        radarChart.setBackgroundColor(Color.WHITE);
         radarChart.getDescription().setEnabled(false);
 //        radarChart.getXAxis().setDrawLabels(false);
 
         radarChart.getLegend().setEnabled(false);
         radarChart.setWebLineWidth(1f);
-        radarChart.setWebColor(Color.LTGRAY);
+        radarChart.setWebColor(Color.BLACK);
+//        radarChart.setWebColor(Color.LTGRAY);
         radarChart.setWebLineWidthInner(1f);
-        radarChart.setWebColorInner(Color.LTGRAY);
+//        radarChart.setWebColorInner(Color.LTGRAY);
         radarChart.setWebAlpha(50);
 
         getStudentRadarResult(studentID);
@@ -90,7 +94,7 @@ public class StudentGradeAnalyticsFragment extends Fragment {
         radarChart.animateXY(1400, 1400, Easing.EasingOption.EaseInOutQuad, Easing.EasingOption.EaseInOutQuad);
 
         XAxis xAxis = radarChart.getXAxis();
-        xAxis.setTextColor(Color.WHITE);
+        xAxis.setTextColor(Color.BLACK);
         xAxis.setTextSize(9f);
         xAxis.setYOffset(0f);
         xAxis.setXOffset(0f);
@@ -122,12 +126,12 @@ public class StudentGradeAnalyticsFragment extends Fragment {
 //        l.setTextColor(Color.WHITE);
 
 
-        lineChart = view.findViewById(R.id.linechart);
-
-        lineChart.setDragEnabled(true);
-        lineChart.setScaleEnabled(false);
-
-        getStudentLineResult(studentID);
+//        lineChart = view.findViewById(R.id.linechart);
+//
+//        lineChart.setDragEnabled(true);
+//        lineChart.setScaleEnabled(false);
+//
+//        getStudentLineResult(studentID);
 
 //        ArrayList<Entry> yData1 = new ArrayList<>();
 //        yData1.add(new Entry(1, 55));
@@ -182,8 +186,8 @@ public class StudentGradeAnalyticsFragment extends Fragment {
                         }
 
                         RadarDataSet set1 = new RadarDataSet(RadarEntries, "Course Average Mark");
-                        set1.setColor(Color.RED);
-                        set1.setFillColor(Color.RED);
+                        set1.setColor(Color.BLUE);
+                        set1.setFillColor(Color.BLUE);
                         set1.setDrawFilled(true);
                         set1.setFillAlpha(180);
                         set1.setLineWidth(1f);
@@ -196,7 +200,7 @@ public class StudentGradeAnalyticsFragment extends Fragment {
                         RadarData data = new RadarData(sets);
                         data.setValueTextSize(8f);
                         data.setDrawValues(false);
-                        data.setValueTextColor(Color.WHITE);
+                        data.setValueTextColor(Color.RED);
 
                         radarChart.setData(data);
                         for(IDataSet<?> set : radarChart.getData().getDataSets()){
@@ -230,7 +234,6 @@ public class StudentGradeAnalyticsFragment extends Fragment {
     }
 
     private void getStudentLineResult(final String studentID) {
-        LineEntries.clear();
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 ConstantURLs.URL_STUDENT_LINE_RESULT,
@@ -247,20 +250,32 @@ public class StudentGradeAnalyticsFragment extends Fragment {
                                     JSONObject obj = jsonArray.getJSONObject(i);
 
                                     String course = obj.getString("courseName").trim();
+
                                     Double mark = obj.getDouble("mark");
-                                    LineEntries.clear();
+
+                                    ArrayList<Entry> LineEntries = new ArrayList<>();
+
                                     LineEntries.add(new Entry(0, mark.floatValue()));
 
-                                    LineDataSet englishSet = new LineDataSet(LineEntries, "English");
+                                    LineDataSet Set1 = new LineDataSet(LineEntries, "Set1");
 
-                                    englishSet.setFillAlpha(110);
+                                    Random rnd = new Random();
+                                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                                    Set1.setColor(color);
+//                                    englishSet.setFillAlpha(110);
 
-                                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                                    dataSets.add(englishSet);
+//                                  public  ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                                    dataSets.add(Set1);
 
-                                    LineData data = new LineData(dataSets);
+//                                    LineData data = new LineData(dataSets);
 
-                                    lineChart.setData(data);
+//                                    lineChart.setData(data);
+
+//                                    lineChart.notifyDataSetChanged();
+//                                    lineChart.setData(data);
+//                                    lineChart.invalidate();
+
+//                                    englishSet.clear();
                                 }
                             }else{
                                 Toast.makeText(
@@ -272,6 +287,9 @@ public class StudentGradeAnalyticsFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        LineData data = new LineData(dataSets);
+                        lineChart.setData(data);
                     }
                 },
                 new Response.ErrorListener() {

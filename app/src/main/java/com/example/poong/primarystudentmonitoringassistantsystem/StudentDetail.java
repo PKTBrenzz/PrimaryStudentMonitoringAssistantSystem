@@ -104,8 +104,6 @@ public class StudentDetail extends AppCompatActivity implements PredictionDialog
                 PredictionDialog predictionDialog = new PredictionDialog();
                 predictionDialog.setArguments(bundle);
 
-
-
                 predictionDialog.show(getSupportFragmentManager(), "my_dialog");
             }
         });

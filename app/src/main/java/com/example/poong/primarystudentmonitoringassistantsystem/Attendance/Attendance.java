@@ -18,7 +18,7 @@ public class Attendance {
 
     public Attendance(){}
 
-    public Attendance(int attendance_id, String attendance_status, String date, String student_id, String submission_status, String studentName, String parenID){
+    public Attendance(int attendance_id, String attendance_status, String date, String student_id, String submission_status, String studentName, String parentID){
         this.attendance_id = attendance_id;
         this.attendance_status = attendance_status;
         this.date = date;

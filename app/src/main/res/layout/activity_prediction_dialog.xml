@@ -32,6 +32,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:hint="Gender" />
+
             <EditText
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
@@ -43,6 +52,15 @@
                 android:editable="false"
                 android:hint="gender" />
 
+            <TextView
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:hint="Absence" />
+
             <EditText
                 android:id="@+id/StudentAbsenceDays"
                 android:layout_width="match_parent"
@@ -53,23 +71,14 @@
                 android:editable="false"
                 android:hint="StudentAbsenceDays" />
 
-            <EditText
-                android:id="@+id/Stage1D"
+            <TextView
+                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:hint="StageID" />
-
-            <EditText
-                android:id="@+id/Semester"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:hint="Semester" />
+                android:hint="Raised hands" />
 
             <EditText
                 android:id="@+id/raisedhands"
@@ -78,7 +87,16 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:hint="raisedhands" />
+                android:hint="1-10" />
+
+            <TextView
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:hint="Discussion" />
 
             <EditText
                 android:id="@+id/Discussion"
@@ -87,7 +105,7 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:hint="Discussion" />
+                android:hint="1-10" />
 
         </LinearLayout>
 

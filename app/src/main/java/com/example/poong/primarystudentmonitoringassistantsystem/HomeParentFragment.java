@@ -17,8 +17,10 @@ import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.Atte
 import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage.StudentActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentListAtParentView;
+import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class HomeParentFragment extends Fragment {
 
@@ -26,7 +28,7 @@ public class HomeParentFragment extends Fragment {
     private HomeViewModel mViewModel;
     private Button adttendanceButton, mShowTeacherButton;
 
-    private ImageButton attendanceButton, studentButton, calendarButton, eventButton;
+    private ImageButton teacherButton, studentButton, signoutButton;
     private TextView userName;
 
     private String identity = SharedPrefManager.getInstance(getActivity()).getUserIdentity();
@@ -45,11 +47,11 @@ public class HomeParentFragment extends Fragment {
         userName = view.findViewById(R.id.userName);
         userName.setText(SharedPrefManager.getInstance(getActivity()).getUsername());
 
-        attendanceButton = view.findViewById(R.id.attendance);
-        attendanceButton.setOnClickListener(new View.OnClickListener() {
+        teacherButton = view.findViewById(R.id.showteachers);
+        teacherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AttendanceActivity.class);
+                Intent intent = new Intent(getActivity(), TeacherList.class);
                 startActivity(intent);
             }
         });
@@ -63,23 +65,18 @@ public class HomeParentFragment extends Fragment {
             }
         });
 
-        calendarButton = view.findViewById(R.id.news);
-        calendarButton.setOnClickListener(new View.OnClickListener() {
+        signoutButton = view.findViewById(R.id.signout);
+        signoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CalendarActivity.class);
-                startActivity(intent);
+                FirebaseMessaging.getInstance()
+                        .unsubscribeFromTopic(SharedPrefManager.getInstance(getActivity()).getUserID());
+                SharedPrefManager.getInstance(getActivity()).logout();
+                getActivity().finish();
+                startActivity(new Intent(getActivity(), LoginActivity2.class));
             }
         });
 
-        eventButton = view.findViewById(R.id.event);
-        eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), StudentActivity.class);
-                startActivity(intent);
-            }
-        });
 //        mShowTeacherButton = view.findViewById(R.id.show_teacher);
 //        if(identity.equals("P")){
 //            mShowTeacherButton.setVisibility(View.VISIBLE);

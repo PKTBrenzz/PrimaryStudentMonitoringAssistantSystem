@@ -73,18 +73,18 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/attendance"
+                            android:id="@+id/showteachers"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:background="@drawable/rounded_circle_blue"
-                            app:srcCompat="@drawable/ic_check_black_24dp" />
+                            app:srcCompat="@drawable/ic_group_black_24dp" />
 
                         <TextView
                             android:id="@+id/textView12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Attendance"
+                            android:text="Show Teachers"
                             android:textAlignment="center" />
                     </LinearLayout>
 
@@ -101,29 +101,7 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/news"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rounded_circle_blue"
-                            app:srcCompat="@drawable/ic_branding_watermark_black_24dp" />
-
-                        <TextView
-                            android:id="@+id/textView13"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="News"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/event"
+                            android:id="@+id/signout"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
@@ -131,10 +109,10 @@
                             app:srcCompat="@drawable/ic_event_black_24dp" />
 
                         <TextView
-                            android:id="@+id/textView14"
+                            android:id="@+id/textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Event"
+                            android:text="Sign Out"
                             android:textAlignment="center" />
                     </LinearLayout>
 

@@ -18,6 +18,7 @@ import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPa
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class HomeTeacherFragment extends Fragment {
 
@@ -25,7 +26,7 @@ public class HomeTeacherFragment extends Fragment {
     private HomeViewModel mViewModel;
     private Button adttendanceButton, mShowTeacherButton;
 
-    private ImageButton attendanceButton, studentButton, calendarButton, eventButton;
+    private ImageButton attendanceButton, studentButton, signoutButton;
     private TextView userName;
 
     private String identity = SharedPrefManager.getInstance(getActivity()).getUserIdentity();
@@ -62,21 +63,15 @@ public class HomeTeacherFragment extends Fragment {
             }
         });
 
-        calendarButton = view.findViewById(R.id.news);
-        calendarButton.setOnClickListener(new View.OnClickListener() {
+        signoutButton = view.findViewById(R.id.signout);
+        signoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        eventButton = view.findViewById(R.id.event);
-        eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), StudentActivity.class);
-                startActivity(intent);
+                FirebaseMessaging.getInstance()
+                        .unsubscribeFromTopic(SharedPrefManager.getInstance(getActivity()).getUserID());
+                SharedPrefManager.getInstance(getActivity()).logout();
+                getActivity().finish();
+                startActivity(new Intent(getActivity(), LoginActivity2.class));
             }
         });
 //        mShowTeacherButton = view.findViewById(R.id.show_teacher);

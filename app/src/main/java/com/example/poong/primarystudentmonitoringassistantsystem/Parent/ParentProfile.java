@@ -69,6 +69,8 @@ public class ParentProfile extends AppCompatActivity {
                     case 0:
                         FirebaseDatabase.getInstance().getReference().child("chat_with").child(SharedPrefManager.getInstance(context).getUserID()).push()
                                 .setValue(parentId);
+                        FirebaseDatabase.getInstance().getReference().child("chat_with").child(parentId).push()
+                                .setValue(SharedPrefManager.getInstance(context).getUserID());
                         Intent intent = new Intent(context, ChatMessageActivity.class);
                         intent.putExtra("NAME", parentId);
                         intent.putExtra("ROOM", name);

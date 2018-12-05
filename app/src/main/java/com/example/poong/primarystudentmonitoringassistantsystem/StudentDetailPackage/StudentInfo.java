@@ -16,8 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
+import com.example.poong.primarystudentmonitoringassistantsystem.Parent.ParentProfile;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
+import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
 import com.example.poong.primarystudentmonitoringassistantsystem.Teacher.TeacherProfile;
 
 import org.json.JSONArray;
@@ -33,6 +35,8 @@ import java.util.Map;
 public class StudentInfo extends Fragment {
 
     private TextView studentName, studentClass, studentMatric, studentDOB, studentGender,parentTextView;
+
+    public String profileEmail = "";
 
     public StudentInfo() {
         // Required empty public constructor
@@ -55,14 +59,6 @@ public class StudentInfo extends Fragment {
         String studentID = getArguments().getString("studentID");
 
         getStudentDetails(studentID);
-
-        parentTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), TeacherProfile.class);
-                getActivity().startActivity(intent);
-            }
-        });
 
         return view;
     }
@@ -89,7 +85,31 @@ public class StudentInfo extends Fragment {
                                     studentMatric.setText(obj.getString("studentID"));
                                     studentDOB.setText(obj.getString("studentDOB"));
                                     studentGender.setText(obj.getString("studentGender"));
-                                    parentTextView.setText(obj.getString("parentName"));
+
+                                    if(SharedPrefManager.getInstance(getActivity().getApplicationContext()).getUserIdentity().equals("T")){
+                                        parentTextView.setText(obj.getString("parentName"));
+                                        profileEmail = obj.getString("parentEmail");
+                                    }
+                                    else{
+                                        parentTextView.setText(obj.getString("teacherName"));
+                                        profileEmail = obj.getString("teacherEmail");
+                                    }
+
+                                    parentTextView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if(SharedPrefManager.getInstance(getActivity().getApplicationContext()).getUserIdentity().equals("T")){
+                                                Intent intent = new Intent(getActivity(), ParentProfile.class);
+                                                intent.putExtra("profileEmail", profileEmail);
+                                                getActivity().startActivity(intent);
+                                            }
+                                            else{
+                                                Intent intent = new Intent(getActivity(), TeacherProfile.class);
+                                                intent.putExtra("profileEmail", profileEmail);
+                                                getActivity().startActivity(intent);
+                                            }
+                                        }
+                                    });
                                 }
                             }else{
                                 Toast.makeText(

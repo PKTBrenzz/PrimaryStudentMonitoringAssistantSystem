@@ -12,18 +12,20 @@ public class Attendance {
     private String student_id;
     private String submission_status;
     private String studentName;
+    private String parentID;
 
     private boolean isEnabled = true;
 
     public Attendance(){}
 
-    public Attendance(int attendance_id, String attendance_status, String date, String student_id, String submission_status, String studentName){
+    public Attendance(int attendance_id, String attendance_status, String date, String student_id, String submission_status, String studentName, String parenID){
         this.attendance_id = attendance_id;
         this.attendance_status = attendance_status;
         this.date = date;
         this.student_id = student_id;
         this.submission_status = submission_status;
         this.studentName = studentName;
+        this.parentID = parentID;
     }
 
     public JSONObject getJSONObject() {
@@ -35,6 +37,7 @@ public class Attendance {
             obj.put("studentID", student_id);
             obj.put("attendanceSubmission", submission_status);
             obj.put("studentName", studentName);
+            obj.put("parentID", parentID);
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -112,5 +115,13 @@ public class Attendance {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public String getParentID() {
+        return parentID;
+    }
+
+    public void setParentID(String parentID) {
+        this.parentID = parentID;
     }
 }

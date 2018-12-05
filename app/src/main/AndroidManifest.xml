@@ -50,7 +50,9 @@
         <activity android:name=".CalendarActivity" />
         <activity android:name=".StudentDetailPackage.StudentActivity" />
         <activity android:name=".Teacher.TeacherProfile" />
-        <activity android:name=".StudentDetailPackage.AddNoteActivity"></activity>
+        <activity android:name=".StudentDetailPackage.AddNoteActivity" />
+        <activity android:name=".Students.StudentListAtParentView"></activity>
+        <activity android:name=".Parent.ParentProfile"/>
     </application>
 
 </manifest>

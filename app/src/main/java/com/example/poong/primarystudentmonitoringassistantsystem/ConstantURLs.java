@@ -15,5 +15,6 @@ public class ConstantURLs {
     public static final String URL_STUDENT_DETAILS = ROOT_URL + "getStudentDetails.php";
     public static final String URL_STUDENT_LINE_RESULT  = ROOT_URL + "getStudentLineResult.php";
     public static final String URL_ATTENDANCE_CALENDAR  = ROOT_URL + "getAttendanceToCalendar.php";
+    public static final String URL_PROFILE_INFO  = ROOT_URL + "getProfileInfo.php";
 
 }

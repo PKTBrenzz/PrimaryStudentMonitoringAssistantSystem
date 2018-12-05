@@ -261,7 +261,6 @@ public class StudentGradeAnalyticsFragment extends Fragment {
                                     LineData data = new LineData(dataSets);
 
                                     lineChart.setData(data);
-
                                 }
                             }else{
                                 Toast.makeText(

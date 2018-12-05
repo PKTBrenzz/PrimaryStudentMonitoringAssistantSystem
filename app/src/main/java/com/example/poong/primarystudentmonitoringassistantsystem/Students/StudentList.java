@@ -38,9 +38,6 @@ import java.util.Map;
 
 public class StudentList extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
-
-    TextView nameText, genderText, dobText, parentText, teacherText, classText;
-
     private Toolbar toolbar;
 
     private RecyclerView recyclerView;
@@ -75,23 +72,6 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
         getClassList();
 
         setSpinnerClasses();
-
-//        Spinner spinnerClasses = findViewById(R.id.spinner_classes);
-//        spinnerClasses.setAdapter(classRoomAdapter);
-//
-//        spinnerClasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                Classroom clickedClass = (Classroom) adapterView.getItemAtPosition(i);
-//                getStudentList(clickedClass.getClassID());
-//                String clickedClassName = clickedClass.getClassName();
-//                Toast.makeText(getApplicationContext(), clickedClassName, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//            }
-//        });
     }
 
     private void setSpinnerClasses() {
@@ -223,9 +203,8 @@ public class StudentList extends AppCompatActivity implements SearchView.OnQuery
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //For teacher
+                params.put("role", "teacher");
                 params.put("classID", String.valueOf(classID));
-                //For Parents
-//                params.put("user_id", SharedPrefManager.getInstance(getActivity()).getUserID());
                 return params;
             }
         };

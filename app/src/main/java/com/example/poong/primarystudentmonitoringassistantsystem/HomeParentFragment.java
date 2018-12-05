@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.poong.primarystudentmonitoringassistantsystem.Attendance.AttendanceActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage.StudentActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentList;
+import com.example.poong.primarystudentmonitoringassistantsystem.Students.StudentListAtParentView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -57,7 +58,7 @@ public class HomeParentFragment extends Fragment {
         studentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), StudentList.class);
+                Intent intent = new Intent(getActivity(), StudentListAtParentView.class);
                 startActivity(intent);
             }
         });

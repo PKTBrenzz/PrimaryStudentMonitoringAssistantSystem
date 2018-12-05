@@ -37,7 +37,8 @@
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile" />
+                app:layout_constraintTop_toBottomOf="@+id/profile"
+                android:layout_marginLeft="15dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,6 +46,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/classTextView"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -67,6 +69,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/studentIDTextView"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -89,6 +92,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/dobTextView"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -109,6 +113,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/genderTextView"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
@@ -127,12 +132,16 @@
 
 
             <TextView
+                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:text="Parents:"
+                android:id="@+id/view10"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
-            <LinearLayout
+
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -140,16 +149,38 @@
                     android:id="@+id/imageView2"
                     android:layout_width="56dp"
                     android:layout_height="51dp"
-                    android:src="@mipmap/ic_profile_android" />
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@mipmap/ic_profile_android"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/parent_name"
-                    android:layout_width="271dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="237dp"
+                    android:layout_height="33dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
                     android:text="Parent's name"
                     android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </android.support.constraint.ConstraintLayout>
 
 
         </LinearLayout>

@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class StudentInfo extends Fragment {
 
-    private TextView studentName, studentClass, studentMatric, studentDOB, studentGender,parentTextView;
+    private TextView studentName, studentClass, studentMatric, studentDOB, studentGender,parentTextView, roles;
 
     public String profileEmail = "";
 
@@ -55,6 +55,7 @@ public class StudentInfo extends Fragment {
         studentDOB = view.findViewById(R.id.birthdate);
         studentGender = view.findViewById(R.id.gender);
         parentTextView = view.findViewById(R.id.parent_name);
+        roles = view.findViewById(R.id.view10);
 
         String studentID = getArguments().getString("studentID");
 
@@ -87,10 +88,12 @@ public class StudentInfo extends Fragment {
                                     studentGender.setText(obj.getString("studentGender"));
 
                                     if(SharedPrefManager.getInstance(getActivity().getApplicationContext()).getUserIdentity().equals("T")){
+                                        roles.setText("Parents:");
                                         parentTextView.setText(obj.getString("parentName"));
                                         profileEmail = obj.getString("parentEmail");
                                     }
                                     else{
+                                        roles.setText("Teachers:");
                                         parentTextView.setText(obj.getString("teacherName"));
                                         profileEmail = obj.getString("teacherEmail");
                                     }

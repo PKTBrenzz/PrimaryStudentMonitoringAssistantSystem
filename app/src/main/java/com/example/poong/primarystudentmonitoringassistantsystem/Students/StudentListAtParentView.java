@@ -77,12 +77,6 @@ public class StudentListAtParentView extends AppCompatActivity {
                                     studentList.add(student);
                                     myStudentRecyclerViewAdapter.notifyDataSetChanged();
                                 }
-
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        SharedPrefManager.getInstance(getApplicationContext()).getUserID(),
-                                        Toast.LENGTH_LONG
-                                ).show();
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),

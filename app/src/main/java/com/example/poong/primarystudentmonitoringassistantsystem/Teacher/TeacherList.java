@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,10 +32,16 @@ public class TeacherList extends AppCompatActivity {
     private RecyclerView.Adapter teacherAdapter;
     private RecyclerView.LayoutManager teacherLayoutManager;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_list);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Teacher List");
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.teacher_list);
         recyclerView.setNestedScrollingEnabled(false);
@@ -76,12 +83,6 @@ public class TeacherList extends AppCompatActivity {
                                     teacherList.add(teacher);
                                     teacherAdapter.notifyDataSetChanged();
                                 }
-
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        SharedPrefManager.getInstance(getApplicationContext()).getUserID(),
-                                        Toast.LENGTH_LONG
-                                ).show();
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),

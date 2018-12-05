@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.poong.primarystudentmonitoringassistantsystem.PredictionDialog;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
+import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
 import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetail;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -101,6 +102,11 @@ public class StudentActivity extends AppCompatActivity implements PredictionDial
         setDialog();
 
         fab = findViewById(R.id.fab);
+
+        if(SharedPrefManager.getInstance(this).getUserIdentity().equals("P")){
+            fab.setVisibility(View.GONE);
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -39,7 +39,7 @@ public class HomeParentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard_teacher, container, false);
+        View view = inflater.inflate(R.layout.fragment_dashboard_parent, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         userName = view.findViewById(R.id.userName);

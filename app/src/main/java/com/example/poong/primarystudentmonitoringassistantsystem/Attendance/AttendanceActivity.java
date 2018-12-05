@@ -25,9 +25,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.ClassRoomAdapter;
 import com.example.poong.primarystudentmonitoringassistantsystem.Class.Classroom;
 import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
+import com.example.poong.primarystudentmonitoringassistantsystem.NotificationPackage.NotificationMessage;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -321,6 +324,12 @@ public class AttendanceActivity extends AppCompatActivity implements SearchView.
         attendanceAdapter.notifyDataSetChanged();
         for (int i = 0; i < attendancesList.size(); i++) {
             attendancesList.get(i).setSubmission_status("submitted");
+//            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("notification").child(attendancesList.get(i).getParentID()).push();
+//            NotificationMessage message = new NotificationMessage("Attendance Notification",
+//                    attendancesList.get(i).getStudentName() + " is " + attendancesList.get(i).getAttendance_status() + " today",new Date().getTime());
+//            message.data.put("tag", "student");
+//            message.data.put("student", attendancesList.get(i).getStudent_id());
+//            ref.setValue(message);
         }
         attendanceAdapter.notifyDataSetChanged();
 

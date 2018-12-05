@@ -1,7 +1,11 @@
 package com.example.poong.primarystudentmonitoringassistantsystem.Parent;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,10 +15,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.poong.primarystudentmonitoringassistantsystem.Chat.ChatMessageActivity;
 import com.example.poong.primarystudentmonitoringassistantsystem.ConstantURLs;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
 import com.example.poong.primarystudentmonitoringassistantsystem.RequestHandler;
 import com.example.poong.primarystudentmonitoringassistantsystem.SharedPrefManager;
+import com.example.poong.primarystudentmonitoringassistantsystem.StudentDetailPackage.AddNoteActivity;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +33,12 @@ import java.util.Map;
 public class ParentProfile extends AppCompatActivity {
 
     private TextView mParentName,mParentEmail,mParentPhone;
+    private FloatingActionButton fab;
 
+    private Context context;
+    private String parentId;
+    private String name;
+    private AlertDialog.Builder builder;
     Intent intent;
 
     @Override
@@ -43,6 +55,30 @@ public class ParentProfile extends AppCompatActivity {
         getParentProfile();
     }
 
+    private void setDialog(){
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Actions");
+
+        String[] options = {
+                "Start instant message"
+        };
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch(i){
+                    case 0:
+                        FirebaseDatabase.getInstance().getReference().child("chat_with").child(SharedPrefManager.getInstance(context).getUserID()).push()
+                                .setValue(parentId);
+                        Intent intent = new Intent(context, ChatMessageActivity.class);
+                        intent.putExtra("NAME", parentId);
+                        intent.putExtra("ROOM", name);
+                        context.startActivity(intent);
+                        break;
+                }
+            }
+        });
+    }
+
     private void getParentProfile() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -53,10 +89,12 @@ public class ParentProfile extends AppCompatActivity {
                         try {
                             JSONObject obj = new JSONObject(response);
                             if(!obj.getBoolean("error")){
-
+                                parentId = obj.getString("parentID");
+                                name = obj.getString("parentName");
                                 mParentName.setText(obj.getString("parentName"));
                                 mParentEmail.setText(obj.getString("parentEmail"));
                                 mParentPhone.setText("+60" + obj.getString("parentPhone"));
+                                setDialog();
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),

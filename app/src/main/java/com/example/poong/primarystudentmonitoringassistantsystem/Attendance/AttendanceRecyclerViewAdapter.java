@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.poong.primarystudentmonitoringassistantsystem.NotificationPackage.NotificationMessage;
 import com.example.poong.primarystudentmonitoringassistantsystem.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AttendanceRecyclerViewAdapter extends RecyclerView.Adapter<AttendanceRecyclerViewAdapter.ViewHolder> {
@@ -55,6 +59,12 @@ public class AttendanceRecyclerViewAdapter extends RecyclerView.Adapter<Attendan
                 }else{
                     items.get(pos).setAttendance_status("absent");
                 }
+//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("notification").child(items.get(pos).getParentID()).push();
+//                NotificationMessage message = new NotificationMessage("Attendance Notification",
+//                        items.get(pos).getStudentName() + " is " + items.get(pos).getAttendance_status() + " today",new Date().getTime());
+//                message.data.put("tag", "student");
+//                message.data.put("student", items.get(pos).getStudent_id());
+//                ref.setValue(message);
             }
         });
     }

@@ -87,6 +87,8 @@ public class TeacherProfile extends AppCompatActivity {
                     case 0:
                         FirebaseDatabase.getInstance().getReference().child("chat_with").child(SharedPrefManager.getInstance(context).getUserID()).push()
                                 .setValue(teacherId);
+                        FirebaseDatabase.getInstance().getReference().child("chat_with").child(teacherId).push()
+                                .setValue(SharedPrefManager.getInstance(context).getUserID());
                         Intent intent = new Intent(context, ChatMessageActivity.class);
                         intent.putExtra("NAME", teacherId);
                         intent.putExtra("ROOM", name);
